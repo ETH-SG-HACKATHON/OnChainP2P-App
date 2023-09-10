@@ -41,6 +41,12 @@ const Navbar = () => {
     router.push(`/profile/${address}`);
   };
 
+  const handleSwap = () =>{
+    router.push("/convert");
+
+
+  }
+
   return (
     <div className="h-[70px] flex justify-between items-center">
       <Link href={"/"} className="ml-[30px]">
@@ -48,6 +54,13 @@ const Navbar = () => {
       </Link>
 
       <div className="flex items-center gap-4 mr-[30px]">
+      <button
+          className="w-[100px] bg-green-main hover:bg-green-main text-white font-semibold py-2 px-4 rounded-full"
+          onClick={handleSwap}
+        >
+          Swap
+        </button>
+
         <button
           className="w-[100px] bg-green-main hover:bg-green-main text-white font-semibold py-2 px-4 rounded-full"
           onClick={handleVote}

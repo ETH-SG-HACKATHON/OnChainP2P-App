@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useAccount, useBalance } from "wagmi";
 import { FetchBalanceResult } from "wagmi/actions";
 import axios from "axios";
+import Navbar from "@/components/Navbar/Navbar";
 
 function ConvertPage() {
   const [tokenOption, setTokenOption] = useState<FetchBalanceResult[]>([]);
@@ -38,27 +39,27 @@ function ConvertPage() {
   };
   return (
     <div className="">
-      <div>Swap</div>
-      <div className="flex justify-center">
-        <div className="bg-black max-w-[500px] p-[20px] rounded-lg text-[white]">
-          <div className="flex text-[white]">
-            <h1 className="pr-[5px]">Swap</h1>
-            <h1>Buy</h1>
-          </div>
+      <Navbar/>
+      <div className="flex justify-center pt-[100px]">
+        <div className=" bg-[#F5F5F5] w-[450px] h-[350px] p-[20px] rounded-3xl text-[black] shadow-[0_20px_500px_rgba(0,_128,0,_0.7)]">
+            <h1 className="pr-[5px] text-2xl text-[#526D82]">Swap</h1>
+            <br />
           <div>
             <div>
               {/* pay */}
               <div>
-                <p>Pay</p>
+                <p className="text-xl text-[#9E9FA5]">Pay</p>
               </div>
               <div className="flex justify-between">
                 <Input
                   type="number"
                   value={payToken}
                   onChange={(e) => setPayToken(Number(e.target.value))}
+                  borderColor = "blackAlpha.500"
+                  size= "lg"
                 />
                 <div className="pl-[10px]">
-                  <Select>
+                  <Select borderColor = "blackAlpha.500" size = "lg">
                     {tokenOption.map((item, key) => {
                       return <option key={key}>{item.symbol}</option>;
                     })}
@@ -66,23 +67,28 @@ function ConvertPage() {
                 </div>
               </div>
             </div>
+            <br />
+
             <div>
               {/* recieve */}
               <div>
-                <p>Recieve</p>
+                <p className="text-xl text-[#9E9FA5]">Recieve</p>
               </div>
               <div className="flex justify-between">
-                <Text className="pl-[15px]">{recieveToken}</Text>
+                <Text className="p-[10px] rounded-lg border-solid border w-[300px]"  borderColor = "blackAlpha.500">{recieveToken}</Text>
                 <div className="pl-[10px]">
-                  <Select>
+                  <Select borderColor = "blackAlpha.500" size="lg">
                     <option value="USDC">USDC</option>
                     <option value="USDT">USDT</option>
                   </Select>
                 </div>
               </div>
             </div>
-            <div className="flex w-[100%]">
-              <Button>Swap</Button>
+            <br />
+            <br />
+
+            <div className="flex justify-center">
+              <button className="w-[300px] bg-[#BEF0CB] text-white font-semibold py-2 px-4 rounded-full">Swap</button>
             </div>
           </div>
         </div>
@@ -92,3 +98,5 @@ function ConvertPage() {
 }
 
 export default ConvertPage;
+
+
