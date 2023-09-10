@@ -6,16 +6,13 @@ import { useToast } from "@chakra-ui/react";
 import { sendNotificationToSeller } from "@/shared/utils";
 import { useAccount } from "wagmi";
 
-function BuyerDetailPage() {
+export function BuyerDetailPage() {
   const [state, setState] = useState(false);
-  const [sellerAddress, setSellerAddress] = useState("");
-  const [listingId, setListingId] = useState(0);
   const { address } = useAccount();
   const toast = useToast();
 
   const handleBuyPending = async () => {
-    if (address)
-      await sendNotificationToSeller(sellerAddress, address, listingId);
+    await sendNotificationToSeller();
   };
   return (
     <div>
@@ -65,5 +62,3 @@ function BuyerDetailPage() {
     </div>
   );
 }
-
-export default BuyerDetailPage;

@@ -1,4 +1,4 @@
-import DaoCard from "@/components/Card/Daocard";
+import DaoCard from "@/components/Card/DaoCard";
 import Navbar from "@/components/Navbar/Navbar";
 import { useState } from "react";
 import { Text } from "@chakra-ui/react";
