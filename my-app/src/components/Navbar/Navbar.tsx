@@ -2,7 +2,7 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Image from "next/image";
-import logo from "../../../public/DP2P-logo.png";
+import logo from "../../../public/DP2Plogo.png";
 import { useAccount } from "wagmi";
 import { useToast } from "@chakra-ui/react";
 
@@ -44,18 +44,18 @@ const Navbar = () => {
   return (
     <div className="h-[70px] flex justify-between items-center">
       <Link href={"/"} className="ml-[30px]">
-        <Image src={logo} alt="" width={100} height={100} />
+        <Image src={logo} alt="" width={150} height={150} />
       </Link>
 
       <div className="flex items-center gap-4 mr-[30px]">
         <button
-          className="w-[100px] bg-yellow-400 hover:bg-yellow-500 text-white font-semibold py-2 px-4 rounded-full"
+          className="w-[100px] bg-green-main hover:bg-green-main text-white font-semibold py-2 px-4 rounded-full"
           onClick={handleVote}
         >
           Vote
         </button>
         <button
-          className="w-[100px] bg-yellow-400 hover:bg-yellow-500 text-white font-semibold py-2 px-4 rounded-full"
+          className="w-[100px] bg-green-main hover:bg-green-main text-white font-semibold py-2 px-4 rounded-full"
           onClick={handleProfile}
         >
           Profile
