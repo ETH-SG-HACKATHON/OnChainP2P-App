@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import Typewriter from "typewriter-effect";
 import Image from "next/image";
-import btc from "../../public/HomeImage.png";
+import btc from "../../public/HomeImage2.png";
 import { Text } from "@chakra-ui/react";
 import { Yellowtail } from "next/font/google";
 

@@ -8,7 +8,9 @@ import {
     Button,
     Text,
   } from "@chakra-ui/react";
+  import btc from "../../public/HomeImage2.png";
   import router from "next/router";
+
   
   interface ListCardProps {
     idr: number;
@@ -30,9 +32,9 @@ import {
         className=" w-[40rem] max-w-[40rem] " //play with this for centering
       >
         <Image
-          objectFit="cover"
-          maxW={{ base: "100%", sm: "200px" }}
-          src="https://static.thenounproject.com/png/2900961-200.png"
+          width={100}
+          height={100}
+          src={logofull}
           alt="Caffe Latte"
         />
   
@@ -48,9 +50,9 @@ import {
           </CardBody>
   
           <CardFooter>
-            <Button variant="solid" colorScheme="blue" onClick={handleTrade}>
+            <button className='bg-green-main text-white font-bold rounded-md w-20 h-10' onClick={handleTrade}>
               Trade
-            </Button>
+            </button>
           </CardFooter>
         </Stack>
       </Card>

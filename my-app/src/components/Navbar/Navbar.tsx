@@ -2,7 +2,7 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Image from "next/image";
-import logo from "../../../public/DP2Plogo.png";
+import logo from "../../../public/DP2Plogo3.png";
 import { useAccount } from "wagmi";
 import { useToast } from "@chakra-ui/react";
 
@@ -50,7 +50,7 @@ const Navbar = () => {
   return (
     <div className="h-[70px] flex justify-between items-center">
       <Link href={"/"} className="ml-[30px]">
-        <Image src={logo} alt="" width={150} height={150} />
+        <Image src={logo} alt="" width={130} height={100} />
       </Link>
 
       <div className="flex items-center gap-4 mr-[30px]">
