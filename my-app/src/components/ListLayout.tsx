@@ -54,7 +54,7 @@ const ListLayout = () => {
       });
       return;
     }
-    router.push("/seller");
+    router.push("/create-listing");
   };
 
   const { address, isConnecting, isDisconnected } = useAccount();
@@ -65,7 +65,7 @@ const ListLayout = () => {
         className="bg-green-main text-white font-bold py-2 px-4 rounded absolute right-[3rem]"
         onClick={handleClick}
       >
-        Become a seller
+        Create Listing
       </button>
       <div className="flex flex-row justify-center items-center h-[900px]">
         {/* play with width for centering */}
