@@ -7,16 +7,16 @@ const HeroLayout = () => {
   return (
     <div className="h-[500px] flex justify-between items-center">
       <div className="ml-[200px] text-xl">
-          <Typewriter
-            options={{
-              strings: ["Hello", "World", "with", "Typewriter.js"],
-              autoStart: true,
-              loop: true,
-            }}
-          />
+        <Typewriter
+          options={{
+            strings: ["Hello", "World", "with", "Typewriter.js"],
+            autoStart: true,
+            loop: true,
+          }}
+        />
         <h1 className="w-[500px]">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt ullam
-          molestiae saepe officia ipsa. 
+          molestiae saepe officia ipsa.
         </h1>
       </div>
 
@@ -28,4 +28,3 @@ const HeroLayout = () => {
 };
 
 export default HeroLayout;
-

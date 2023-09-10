@@ -14,6 +14,7 @@ function Createlisting() {
   const [paymentMethod, setPaymentMethod] = useState("");
   const [name, setName] = useState("");
   const [accountNumber, setAccountNumber] = useState("");
+  const [state, setState] = useState(false);
   const [tokenOption, setTokenOption] = useState<FetchBalanceResult[]>([]);
   const { address } = useAccount();
   const { data, isError, isLoading } = useBalance({
@@ -59,10 +60,23 @@ function Createlisting() {
           </div>
           <div>
             <h1>Token</h1>
+            {state ?? (
+              <p>
+                Convert to USDT or USDC{" "}
+                <span>
+                  <a href={`/convert`}>Convert Now</a>
+                </span>
+              </p>
+            )}
             <Select
               placeholder="Select option"
               onChange={(e) => {
                 setToken(e.target.value);
+                if (e.target.value === "USDT" || e.target.value === "USDC") {
+                  setState(true);
+                } else {
+                  setState(false);
+                }
                 const balance = tokenOption.find(
                   (token) => token.symbol === e.target.value
                 )?.formatted;
