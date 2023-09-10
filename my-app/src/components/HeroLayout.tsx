@@ -9,8 +9,8 @@ const HeroLayout = () => {
   return (
     <div className="h-[500px] flex justify-between items-center">
       <div className="ml-[200px] text-xl">
-        <div className="flex flex-row text-5xl">
-          <Text fontSize='5xl' className="mr-3" color='yellow.400' as='b'>Convert</Text>
+        <div className="flex flex-row text-5xl text-yellow-400 font-bold">
+          <Text fontSize='5xl' className="mr-3" color='black'>Convert</Text>
           <Typewriter
             options={{
               strings: ["USD", "EUR", "IDR", "MYR", "SGD"],
@@ -19,8 +19,8 @@ const HeroLayout = () => {
             }}
           />
         </div>
-        <div className="flex flex-row text-5xl">
-          <Text fontSize='5xl' className="mr-3" as='b'>Into</Text>
+        <div className="flex flex-row text-5xl text-yellow-400 font-bold">
+          <Text fontSize='5xl' className="mr-3" color='black'>Into</Text>
           <Typewriter
             options={{
               strings: ["USDT", "USDC"],
