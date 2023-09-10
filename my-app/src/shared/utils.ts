@@ -76,3 +76,68 @@ export async function AddImageToDb(link: string, contractAddress: string) {
     console.log(e);
   }
 }
+
+export async function sendNotificationToSeller(
+  seller: string,
+  buyer: string,
+  listing_id: number
+) {
+  try {
+    const supabase = getSupabase();
+    const { data, error } = await supabase
+      .from("notification")
+      .insert({
+        seller_address: seller,
+        buyer_address: buyer,
+        status: "PENDING",
+        listing_id: listing_id,
+      })
+      .select();
+    console.log(data);
+    const { data: data2, error: error2 } = await supabase
+      .from("listing")
+      .insert({
+        offers: listing_id,
+      })
+      .eq("id", listing_id);
+    console.log(data2);
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+export const acceptOffer = async (id: number) => {
+  try {
+    const supabase = getSupabase();
+    const { data, error } = await supabase
+      .from("notification")
+      .update({
+        status: "ACCEPTED",
+      })
+      .eq("id", id);
+
+    const { data: data2, error: error2 } = await supabase
+      .from("noification")
+      .update({
+        status: "REJECTED",
+      })
+      .eq("status", "PENDING");
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const rejectOffer = async (id: number) => {
+  try {
+    const supabase = getSupabase();
+    const { data, error } = await supabase
+      .from("notification")
+      .update({
+        status: "REJECTED",
+      })
+      .eq("id", id);
+    console.log(data);
+  } catch (e) {
+    console.log(e);
+  }
+};
