@@ -15,6 +15,7 @@ import { configureChains, mainnet, createConfig, WagmiConfig } from "wagmi";
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
 import "@rainbow-me/rainbowkit/styles.css";
+import { ChakraProvider } from "@chakra-ui/react";
 
 export default function App({ Component, pageProps }: AppProps) {
   const { chains, publicClient } = configureChains(
@@ -40,7 +41,9 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <WagmiConfig config={wagmiConfig}>
       <RainbowKitProvider chains={chains}>
-        <Component {...pageProps} />;
+        <ChakraProvider>
+          <Component {...pageProps} />
+        </ChakraProvider>
       </RainbowKitProvider>
     </WagmiConfig>
   );
