@@ -2,14 +2,14 @@ import {
     Card,
     CardBody,
     CardFooter,
-    Image,
     Stack,
     Heading,
     Button,
     Text,
   } from "@chakra-ui/react";
-  import btc from "../../public/HomeImage2.png";
+  import logofull from "../../../public/DP2Plogo2.png";
   import router from "next/router";
+  import Image from "next/image"
 
   
   interface ListCardProps {
@@ -32,10 +32,10 @@ import {
         className=" w-[40rem] max-w-[40rem] " //play with this for centering
       >
         <Image
-          width={100}
-          height={100}
           src={logofull}
           alt="Caffe Latte"
+          width={200}
+          height={200}
         />
   
         <Stack>
