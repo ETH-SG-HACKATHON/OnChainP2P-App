@@ -53,11 +53,13 @@ function Createlisting() {
     <div>
       <div className="p-8">
         <Navbar />
-        <h1 className="text-4xl font-semibold my-6 mt-6 ml-4">Create Listing</h1>
+        <h1 className="text-3xl font-semibold  mt-6 mb-2 ml-4">
+          Create Listing
+        </h1>
 
         <div className="flex justify-around p-4 gap-5">
           <div className="w-1/2">
-            <Card>
+            <Card className="p-2">
               <CardBody>
                 <Text fontSize="2xl" as="b">
                   Listing Form
@@ -73,7 +75,7 @@ function Createlisting() {
                     placeholder={address}
                   />
                 </div>
-                <div className="mt-3 mb-5">
+                <div className="mt-3 mb-3">
                   <Text fontSize="lg" as="b">
                     Token
                   </Text>
@@ -111,10 +113,15 @@ function Createlisting() {
                     );
                   })}
                 </div>
-                <Text fontSize="2xl" as="b" className="mt-3">
+                <Text fontSize="lg" as="b" className="mt-3">
                   Amount
                 </Text>
-                <Divider className="mt-2" />
+                <Input
+                  variant="outline"
+                  placeholder={amount.toString()}
+                  onChange={(e) => setAmount(e.target.value)}
+                />
+                {/* <Divider className="mt-2" /> */}
                 <div className="mt-3">
                   <Text fontSize="lg" as="b">
                     Balance
@@ -167,7 +174,7 @@ function Createlisting() {
               </CardBody>
             </Card>
 
-            <Card className="mt-4">
+            <Card className="mt-4 p-2">
               <CardBody>
                 <Text fontSize="2xl" as="b">
                   Personal Information
@@ -205,7 +212,7 @@ function Createlisting() {
             </Card>
           </div>
 
-          <Card className="w-1/2">
+          <Card className="w-1/2 p-2">
             <CardBody>
               <div>
                 <Text className="text-2xl" as="b">
