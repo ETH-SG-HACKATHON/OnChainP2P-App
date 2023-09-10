@@ -1,34 +1,34 @@
 import Navbar from "@/components/Navbar/Navbar";
+import { Card, CardBody, CardHeader, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
 export const DummyVote = [
-    {
-      byAddress: "0x1234567890",
-      details: "lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      bReason: "lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      sReason: "lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    },
-    {
-      byAddress: "0x2457112314",
-      details: "lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      bReason: "lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      sReason: "lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    },
-    {
-      byAddress: "0x3349875092",
-      details: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      bReason: "lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      sReason: "lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    },
-    {
-      byAddress: "0x4867234124",
-      details: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      bReason: "lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      sReason: "lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    },
-  ]
-  
+  {
+    byAddress: "0x1234567890",
+    details: "lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    bReason: "lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    sReason: "lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+  },
+  {
+    byAddress: "0x2457112314",
+    details: "lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    bReason: "lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    sReason: "lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+  },
+  {
+    byAddress: "0x3349875092",
+    details: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    bReason: "lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    sReason: "lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+  },
+  {
+    byAddress: "0x4867234124",
+    details: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    bReason: "lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    sReason: "lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+  },
+];
 
 interface Dummy {
   byAddress: string;
@@ -56,8 +56,15 @@ const FullVote = () => {
   return (
     <div>
       <Navbar />
-      <h1>Dispute by: {Address}</h1>
-      <p>Details: {details}</p>
+      <div className="container mx-auto w-7/8">
+        <Card>
+          <CardBody>
+            <Text fontSize='3xl' as='b'>Dispute Details</Text>
+            <h1>Dispute by: {Address}</h1>
+            <p>Details: {details}</p>
+          </CardBody>
+        </Card>
+      </div>
       <div className="h-[600px] flex items-center justify-around">
         <div className="text-center">
           <p>buyer Reason: {bReason}</p>
