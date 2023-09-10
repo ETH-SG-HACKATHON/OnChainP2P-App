@@ -39,27 +39,31 @@ function ConvertPage() {
   };
   return (
     <div className="">
-      <Navbar/>
-      <div className="flex justify-center pt-[100px]">
+      <Navbar />
+      <div className="flex flex-col justify-center items-center pt-[100px] text-green-main">
+        <Text fontSize="5xl" as="b" className="mb-2">
+          Simply Click. Simply Input. Simply Swap Currency.
+        </Text>
+        <Text fontSize='xl' as='b' className='mb-20' color='black'>One simple interface to swap your cryptocurrency without any hassle.</Text>
         <div className=" bg-[#F5F5F5] w-[450px] h-[350px] p-[20px] rounded-3xl text-[black] shadow-[0_20px_500px_rgba(0,_128,0,_0.7)]">
-            <h1 className="pr-[5px] text-2xl text-[#526D82]">Swap</h1>
-            <br />
+          <h1 className="pr-[5px] text-2xl text-[#526D82] font-bold">Swap</h1>
+          <br />
           <div>
             <div>
               {/* pay */}
               <div>
-                <p className="text-xl text-[#9E9FA5]">Pay</p>
+                <p className="text-xl text-[#9E9FA5] font-semibold">Pay</p>
               </div>
               <div className="flex justify-between">
                 <Input
                   type="number"
                   value={payToken}
                   onChange={(e) => setPayToken(Number(e.target.value))}
-                  borderColor = "blackAlpha.500"
-                  size= "lg"
+                  borderColor="blackAlpha.500"
+                  size="lg"
                 />
                 <div className="pl-[10px]">
-                  <Select borderColor = "blackAlpha.500" size = "lg">
+                  <Select borderColor="blackAlpha.500" size="lg">
                     {tokenOption.map((item, key) => {
                       return <option key={key}>{item.symbol}</option>;
                     })}
@@ -72,12 +76,17 @@ function ConvertPage() {
             <div>
               {/* recieve */}
               <div>
-                <p className="text-xl text-[#9E9FA5]">Recieve</p>
+                <p className="text-xl text-[#9E9FA5] font-semibold">Receive</p>
               </div>
               <div className="flex justify-between">
-                <Text className="p-[10px] rounded-lg border-solid border w-[300px]"  borderColor = "blackAlpha.500">{recieveToken}</Text>
+                <Text
+                  className="p-[10px] rounded-lg border-solid border w-[300px]"
+                  borderColor="blackAlpha.500"
+                >
+                  {recieveToken}
+                </Text>
                 <div className="pl-[10px]">
-                  <Select borderColor = "blackAlpha.500" size="lg">
+                  <Select borderColor="blackAlpha.500" size="lg">
                     <option value="USDC">USDC</option>
                     <option value="USDT">USDT</option>
                   </Select>
@@ -88,7 +97,9 @@ function ConvertPage() {
             <br />
 
             <div className="flex justify-center">
-              <button className="w-[300px] bg-[#BEF0CB] text-white font-semibold py-2 px-4 rounded-full">Swap</button>
+              <button className="w-[300px] bg-green-main text-white font-semibold py-2 px-4 rounded-full">
+                Swap
+              </button>
             </div>
           </div>
         </div>
@@ -98,5 +109,3 @@ function ConvertPage() {
 }
 
 export default ConvertPage;
-
-
