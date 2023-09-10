@@ -2,21 +2,35 @@ import { useEffect } from "react";
 import Typewriter from "typewriter-effect";
 import Image from "next/image";
 import btc from "../../public/logo.png";
+import { Text } from "@chakra-ui/react";
+import { Yellowtail } from "next/font/google";
 
 const HeroLayout = () => {
   return (
     <div className="h-[500px] flex justify-between items-center">
       <div className="ml-[200px] text-xl">
-        <Typewriter
-          options={{
-            strings: ["Hello", "World", "with", "Typewriter.js"],
-            autoStart: true,
-            loop: true,
-          }}
-        />
-        <h1 className="w-[500px]">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt ullam
-          molestiae saepe officia ipsa.
+        <div className="flex flex-row text-5xl text-yellow-400 font-bold">
+          <Text fontSize='5xl' className="mr-3" color='black'>Convert</Text>
+          <Typewriter
+            options={{
+              strings: ["USD", "EUR", "IDR", "MYR", "SGD"],
+              autoStart: true,
+              loop: true,
+            }}
+          />
+        </div>
+        <div className="flex flex-row text-5xl text-yellow-400 font-bold">
+          <Text fontSize='5xl' className="mr-3" color='black'>Into</Text>
+          <Typewriter
+            options={{
+              strings: ["USDT", "USDC"],
+              autoStart: true,
+              loop: true,
+            }}
+          />
+        </div>
+        <h1 className="w-[500px] mt-4 font-semibold">
+          DP2P allows easy, secure, and transparent currency exchange from FIAT to Cryptocurrency
         </h1>
       </div>
 

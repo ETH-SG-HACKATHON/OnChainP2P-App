@@ -2,7 +2,7 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Image from "next/image";
-import logo from "../../../public/logo.JPG";
+import logo from "../../../public/DP2P-logo.png";
 import { useAccount } from "wagmi";
 import { useToast } from "@chakra-ui/react";
 
