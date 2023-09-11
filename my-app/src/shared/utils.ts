@@ -50,6 +50,21 @@ export async function getListingFromSupabase(address: string) {
   }
 }
 
+export async function getAllListingFromSupabase() {
+  try {
+    const supabase = getSupabase();
+    const { data, error } = await supabase
+      .from("listing")
+      .select()
+    console.log(data);
+    return data;
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+
+
 export async function addImageToSupabase(image: any) {
   try {
     const supabase = getSupabase();
