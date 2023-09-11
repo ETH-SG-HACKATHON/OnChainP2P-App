@@ -219,3 +219,17 @@ export const insertTransaction = async (dataTr: Transaction) => {
     console.log(e);
   }
 };
+
+export async function getTransactionFromSupabase(address: string) {
+  try {
+    const supabase = getSupabase();
+    const { data, error } = await supabase
+      .from("Transaction")
+      .select()
+      .eq("wallet_address", address);
+    console.log(data);
+    return data;
+  } catch (e) {
+    console.log(e);
+  }
+}
