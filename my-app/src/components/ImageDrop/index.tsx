@@ -23,8 +23,8 @@ const ImageUploader = ({ onImageChange }: ImageUploaderProps) => {
 
   return (
     <div {...getRootProps()}>
-      <div className="flex justify-center align-center px-[50px] h-[500px]">
-        <label className="flex justify-center w-full h-32 px-4 transition bg-white border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none h-[500px]">
+      <div className="flex justify-center align-center px-[50px] h-[100px]">
+        <label className="flex justify-center w-full h-16 px-4 transition bg-white border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none h-[500px]">
           <span className="flex items-center space-x-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"

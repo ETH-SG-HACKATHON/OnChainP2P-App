@@ -27,7 +27,7 @@ const DaoCard = ({ byAddress, details, bReason, sReason }: DaoCardProps) => {
         <CardBody className="flex justify-between">
           <div className='flex flex-col'>
             <Text as='b'>Dispute by: {byAddress}</Text>
-            <Text as='b'>Details: {details}</Text>
+            <Text as='i'>Details: {details}</Text>
           </div>
           <button
             className="w-[70px] bg-green-main hover:bg-green-main text-white font-semibold py-2 px-4 rounded-md"
