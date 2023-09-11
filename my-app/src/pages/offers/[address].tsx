@@ -2,17 +2,20 @@ import { CardOffer } from "@/components/Card/CardOffer";
 import Navbar from "@/components/Navbar/Navbar";
 import { useEffect, useState } from "react";
 import { Divider, Text } from "@chakra-ui/react";
+import { useAccount } from "wagmi";
+import { fetchNotification } from "@/shared/utils";
 
 function ViewOffers() {
   const [data, setData] = useState<any[]>([]);
+  const [addressR, setAddressR] = useState<string | undefined>("");
+  const { address } = useAccount();
   useEffect(() => {
-    setData([
-      {
-        id: 1,
-        buyer: "0x1234567890",
-        reputation: 100,
-      },
-    ]);
+    setAddressR(address?.toString());
+    const fetchData = async () => {
+      const result = await fetchNotification(address?.toString());
+      setData(result);
+    };
+    fetchData();
   }, []);
   return (
     <div>
@@ -27,8 +30,8 @@ function ViewOffers() {
             return (
               <CardOffer
                 id={item.id}
-                buyer={item.buyer}
-                reputation={item.reputation}
+                buyer={item.buyer_address}
+                reputation={100}
                 key={index}
               />
             );

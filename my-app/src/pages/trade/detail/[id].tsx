@@ -17,11 +17,14 @@ function BuyerDetailPage() {
   const { address } = useAccount();
   const toast = useToast();
 
-
   const handleBuyPending = async () => {
-    // if (address) console.log(listingId);
-    // console.log(sellerAddress);
-    // await sendNotificationToSeller(sellerAddress, address, listingId);
+    if (address) console.log(listingId);
+    console.log(sellerAddress);
+    await sendNotificationToSeller(
+      sellerAddress,
+      address?.toString(),
+      listingId
+    );
   };
 
   const router = useRouter();
@@ -29,24 +32,19 @@ function BuyerDetailPage() {
   const [listings, setListings] = useState<any[]>([]); // Adjust the type as needed
 
   useEffect(() => {
-    // Ensure that this code only runs on the client
-    if (typeof window !== "undefined") {
-      if (id) {
-        async function fetchData() { //IGNORE AJA GPP
-          try {
-            const data = await getListingFromSupabaseId(id);
-            setListings(data);
-          } catch (error) {
-            console.error("Error fetching data:", error);
-          }
-        }
-        
-        // Call the fetchData function to initiate data retrieval when the component mounts
-        fetchData();
+    const getDataListing = async () => {
+      setListingId(id);
+      console.log(id);
+      const data = await fetchListingById(id);
+      console.log(data);
+      if (data) {
+        setSellerAddress(data[0]?.wallet_address || "");
+        setListingId(data[0]?.id || "");
+        setDataFetch(data);
       }
-    }
-  }, [id]);
-
+    };
+    getDataListing();
+  }, [11]);
 
   return (
     <div>
@@ -57,36 +55,28 @@ function BuyerDetailPage() {
 
           <div className="p-[40px]">
             {/* Details */}
-            <div>
-              {listings.map((listing) => (
-                <div key={listing.id} className="flex flex-col gap-5">
-                  <h1 className="flex items-center rounded-xl pl-[10px] border-2 w-[500px] h-[80px] ">
-                    Wallet Address: {listing.wallet_address}
-                  </h1>
-                  <h1 className="flex items-center rounded-xl pl-[10px] border-2 w-[500px] h-[40px] ">
-                    Token: {listing.token}
-                  </h1>
-                  <h1 className="flex items-center rounded-xl pl-[10px] border-2 w-[500px] h-[40px] ">
-                    Amount: {listing.amount}
-                  </h1>
-                  <h1 className="flex items-center rounded-xl pl-[10px] border-2 w-[500px] h-[40px] ">
-                    Price: {listing.price}
-                  </h1>
-                  <h1 className="flex items-center rounded-xl pl-[10px] border-2 w-[500px] h-[40px] ">
-                    Duration: {listing.duration}
-                  </h1>
-                  <h1 className="flex items-center rounded-xl pl-[10px] border-2 w-[500px] h-[40px] ">
-                    Payment Method: {listing.payment_method}
-                  </h1>
-                  <h1 className="flex items-center rounded-xl pl-[10px] border-2 w-[500px] h-[40px] ">
-                    Name: {listing.name}
-                  </h1>
-                  <h1 className="flex items-center rounded-xl pl-[10px] border-2 w-[500px] h-[40px] ">
-                    Account Number: {listing.account_number}
-                  </h1>
-                </div>
-              ))}
- 
+            <div className=" flex flex-col gap-5">
+              <h1 className="flex items-center rounded-xl pl-[10px] border-2 w-[500px] h-[40px] ">
+                Wallet Address: {dataFetch[0]?.wallet_address}
+              </h1>
+              <h1 className="flex items-center rounded-xl pl-[10px] border-2 w-[500px] h-[40px] ">
+                Token: {dataFetch[0]?.token}
+              </h1>
+              <h1 className="flex items-center rounded-xl pl-[10px] border-2 w-[500px] h-[40px] ">
+                Amount:{dataFetch[0]?.amount}
+              </h1>
+              <h1 className="flex items-center rounded-xl pl-[10px] border-2 w-[500px] h-[40px] ">
+                Price:{dataFetch[0]?.price}
+              </h1>
+              <h1 className="flex items-center rounded-xl pl-[10px] border-2 w-[500px] h-[40px] ">
+                Duration:{dataFetch[0]?.duration}
+              </h1>
+              <h1 className="flex items-center rounded-xl pl-[10px] border-2 w-[500px] h-[40px] ">
+                Payment Method: {dataFetch[0]?.payment_method}
+              </h1>
+              <h1 className="flex items-center rounded-xl pl-[10px] border-2 w-[500px] h-[40px] ">
+                Name:{dataFetch[0]?.name}
+              </h1>
             </div>
 
             {/* Button */}

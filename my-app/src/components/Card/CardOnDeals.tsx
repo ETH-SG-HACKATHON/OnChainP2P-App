@@ -42,11 +42,13 @@ export const CardOnDeals = ({
 
   const watchEvent = watchContractEvent(
     {
-      address: "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512",
+      address: "0xF389E98821E2aa9439D6868D85Ba9e0252b8e1cB",
       abi: escrow.abi,
       eventName: "EscrowCreated",
     },
-    (log) => setContractAddress(log)
+    (log) => {
+      console.log(log);
+    }
   );
 
   //   const { data, write, isSuccess } = useContractWrite(config);
@@ -57,8 +59,9 @@ export const CardOnDeals = ({
   useEffect(() => {
     const fetchData = async () => {
       const data = await fetchListingById(id);
-      if (data[0]?.status == "") setState(false);
       console.log(data);
+      if (data[0]?.status == "DONE") setState(false);
+      console.log(state);
       setResult(data);
       setSellerAddress(data[0]?.wallet_address);
       setListId(data[0]?.id);
@@ -92,13 +95,19 @@ export const CardOnDeals = ({
           <Text>Duration: {duration} Minutes</Text>
         </CardBody>
       </div>
-      {state ?? (
+      {state ? (
         <DeployEscrowContract
-          value={value}
+          value={value?.toString()}
           sellerAddress={sellerAddress}
           addressR={addressR}
           listId={listId}
         />
+      ) : (
+        <>
+          <Button onClick={() => router.push(`/trade/detail/${listId}`)}>
+            Continue
+          </Button>
+        </>
       )}
 
       {/* {isSuccess ??
