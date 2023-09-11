@@ -2,8 +2,8 @@ import { BuyerPov } from "@/components/Buyer/BuyerPov";
 import { useEffect, useState } from "react";
 import { Button, useToast } from "@chakra-ui/react";
 import {
-  checkUserOrSeller,
-  checkUserOrSeller2,
+  // checkUserOrSeller,
+  // checkUserOrSeller2,
   fetchListingById,
   sendNotificationToSeller,
 } from "@/shared/utils";
@@ -16,24 +16,24 @@ function BuyerDetailPage() {
   const [sellerAddress, setSellerAddress] = useState("");
   const [dataFetch, setDataFetch] = useState<any[]>([]);
   const [listingId, setListingId] = useState(0);
-  const [states, setStates] = useState(0);
+  const [states, setStates] = useState(1);
   const [deposit, setDeposit] = useState(false);
 
   const toast = useToast();
-  const { address } = useAccount();
+  const { address, isConnecting, isDisconnected } = useAccount();
 
-  const handleBuyPending = async () => {
-    if (address) {
-      console.log(listingId);
-      console.log(sellerAddress);
+  // const handleBuyPending = async () => {
+  //   if (address) {
+  //     console.log(listingId);
+  //     console.log(sellerAddress);
 
-      await sendNotificationToSeller(
-        sellerAddress,
-        address?.toString(),
-        listingId
-      );
-    }
-  };
+  //     await sendNotificationToSeller(
+  //       sellerAddress,
+  //       address?.toString(),
+  //       listingId
+  //     );
+  //   }
+  // };
 
   const router = useRouter();
   const { id } = router.query;
@@ -56,31 +56,43 @@ function BuyerDetailPage() {
     getDataListing();
   }, [id]);
 
-  useEffect(() => {
-    const check = async () => {
-      if (address) {
-        const test = await checkUserOrSeller(address.toString());
-        if (test === 1) {
-          setStates(1);
-        } else if (test === 2) {
-          setStates(2);
-        } else {
-          setStates(3);
-        }
-      }
-    };
-    check();
-  }, []);
+  // useEffect(() => {
+  //   const check = async () => {
+  //     if (address) {
+  //       const test = await checkUserOrSeller(address.toString());
+  //       if (test === 1) {
+  //         setStates(1);
+  //       } else if (test === 2) {
+  //         setStates(2);
+  //       } else {
+  //         setStates(3);
+  //       }
+  //     }
+  //   };
+  //   check();
+  // }, []);
 
-  useEffect(() => {
-    const checkPossibleDeposit = async () => {
-      if (address) {
-        const test = await checkUserOrSeller2(address.toString());
-        setDeposit(true);
-      }
-    };
-    checkPossibleDeposit();
-  }, []);
+  // useEffect(() => {
+  //   const checkPossibleDeposit = async () => {
+  //     if (address) {
+  //       const test = await checkUserOrSeller2(address.toString());
+  //       setDeposit(true);
+  //     }
+  //   };
+  //   checkPossibleDeposit();
+  // }, []);
+
+
+  const  handleBuy = () => {
+    setStates(2)
+    
+
+
+
+
+  }
+
+
   return (
     <div>
       <Navbar />
@@ -123,7 +135,119 @@ function BuyerDetailPage() {
             </div>
 
             {/* Button */}
-            {states === 1 ? (
+
+            <div>
+              {states === 1 ? (
+                <div>
+                  {address !== sellerAddress ? (
+                    // Render the "Buy" button if the address is not equal to the seller's address
+                    <button onClick={handleBuy}>Buy</button>
+                  ) : (
+                    // Render a message if the address is equal to the seller's address
+                    <p>none</p>
+                  )}
+                </div>
+              ) : // Render nothing if states is not equal to 1
+              null}
+            </div>
+
+            <div>
+              {states === 2 ? (
+                <div>
+                  {address !== sellerAddress ? (
+                    // Render the "Buy" button if the address is not equal to the seller's address
+                    <p> waiting for seller to accept</p>
+                  ) : (
+                    // Render a message if the address is equal to the seller's address
+                    <button onClick={()=> setStates(3) }>accept</button>
+                  )}
+                </div>
+              ) : // Render nothing if states is not equal to 1
+              null}
+            </div>
+
+            <div>
+              {states === 3 ? (
+                <div>
+                  {address !== sellerAddress ? (
+                    // Render the "Buy" button if the address is not equal to the seller's address
+                    <b onClick={()=> setStates(4) }> deploy contract</b>
+                  ) : (
+                    // Render a message if the address is equal to the seller's address
+                    <p>waiting for buyer to deploy contract</p>
+                  )}
+                </div>
+              ) : // Render nothing if states is not equal to 1
+              null}
+            </div>
+
+            <div>
+              {states === 4 ? (
+                <div>
+                  {address !== sellerAddress ? (
+                    // Render the "Buy" button if the address is not equal to the seller's address
+                    <p> waiting for seller to deposit </p>
+                  ) : (
+                    // Render a message if the address is equal to the seller's address
+                    <b onClick={()=> setStates(5) }> deposit money</b>
+                  )}
+                </div>
+              ) : // Render nothing if states is not equal to 1
+              null}
+            </div>
+
+            <div>
+              {states === 5 ? (
+                <div>
+                  {address !== sellerAddress ? (
+                    // Render the "Buy" button if the address is not equal to the seller's address
+                    <b onClick={()=> setStates(6) }> picture button  </b>
+                  ) : (
+                    // Render a message if the address is equal to the seller's address
+                    <p> waiting for buyer proof</p>
+                  )}
+                </div>
+              ) : // Render nothing if states is not equal to 1
+              null}
+            </div>
+
+            <div>
+              {states === 6 ? (
+                <div>
+                  {address !== sellerAddress ? (
+                    // Render the "Buy" button if the address is not equal to the seller's address
+                    <p> wait for seller confirmation   </p>
+                  ) : (
+                    // Render a message if the address is equal to the seller's address
+                    <b onClick={()=> setStates(7) }> confirm</b>
+                  )}
+                </div>
+              ) : // Render nothing if states is not equal to 1
+              null}
+            </div>
+
+            <div>
+              {states === 7 ? (
+                <div>
+                  {address !== sellerAddress ? (
+                    // Render the "Buy" button if the address is not equal to the seller's address
+                    <p> transaction successfull   </p>
+                  ) : (
+                    // Render a message if the address is equal to the seller's address
+                    <p> transaction successfull </p>
+                  )}
+                </div>
+              ) : // Render nothing if states is not equal to 1
+              null}
+            </div>
+
+
+
+
+
+
+            {/* Button */}
+            {/* {states === 1 ? (
               <div>
                 <Button>Waiting for buyer to transfer</Button>
               </div>
@@ -138,8 +262,7 @@ function BuyerDetailPage() {
             ) : (
               <></>
             )}
-            {states === 3 ? <Button>Buy</Button> : <></>}
-
+            {states === 3 ? <Button>Buy</Button> : <></>} */}
             {/* <div className="flex mt-5 gap-5">
               <button
                 onClick={() => {
