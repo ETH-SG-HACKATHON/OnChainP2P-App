@@ -2,25 +2,36 @@ import { Listing } from "@/schema/createListing";
 import { Select, Button, Input, Heading, useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { useAccount, useBalance } from "wagmi";
+import {
+  useAccount,
+  useBalance,
+  useContractWrite,
+  usePrepareContractWrite,
+  useWaitForTransaction,
+} from "wagmi";
 import { FetchBalanceResult } from "wagmi/actions";
 import { Card, CardHeader, CardBody, CardFooter } from "@chakra-ui/react";
 import { Text, Divider } from "@chakra-ui/react";
 import Navbar from "@/components/Navbar/Navbar";
+import { CreateListing } from "@/components/hooks/CreateListing";
+import { ethers } from "ethers";
 
 function Createlisting() {
   const [token, setToken] = useState("");
   const [balance, setBalance] = useState("");
   const [amount, setAmount] = useState(0);
+  const [amountEthers, setAmountEthers] = useState<any>("");
   const [price, setPrice] = useState(0);
   const [duration, setDuration] = useState(0);
   const [paymentMethod, setPaymentMethod] = useState("");
   const [name, setName] = useState("");
   const [accountNumber, setAccountNumber] = useState("");
+  const [state2, setState2] = useState(false);
+  const [data2, setData2] = useState<Listing>();
   const [state, setState] = useState(false);
   const [tokenOption, setTokenOption] = useState<FetchBalanceResult[]>([]);
   const { address } = useAccount();
-  const { data, isError, isLoading } = useBalance({
+  const { data } = useBalance({
     address: address,
   });
   const router = useRouter();
@@ -33,8 +44,55 @@ function Createlisting() {
     }
   }, []);
 
-  const handleSubmit = async () => {
-    if (address) {
+  // const { config } = usePrepareContractWrite({
+  //   address: "0x5fbdb2315678afecb367f032d93f642f64180aa3",
+  //   abi: listing.abi,
+  //   functionName: "createAd",
+  //   args: [amountEthers, paymentMethod],
+  //   onSuccess(test) {
+  //     console.log(config);
+  //   },
+  // });
+
+  // const { data: data2, write: write2 } = useContractWrite(config);
+
+  // const handleSubmit = async () => {
+  //   console.log(process.env.LISTING_CONTRACT);
+  //   console.log(address);
+  //   console.log(ethers.utils.parseEther(amount.toString()));
+  //   setAmountEthers(ethers.utils.parseEther(amount.toString()));
+  //   if (address && write2) {
+  //     const dataList: Listing = {
+  //       walletAddress: address.toString(),
+  //       token: token,
+  //       amount: amount,
+  //       price: price,
+  //       duration: duration,
+  //       paymentMethod: paymentMethod,
+  //       name: name,
+  //       accountNumber: accountNumber,
+  //     };
+  //     console.log(dataList);
+  //     write2();
+  //     insertListingToSupabase(dataList);
+  //     //TODO submit transaction to on-chain
+  //     console.log("listed");
+  //     router.push("/");
+  //     toast({
+  //       title: "Listing Submitted.",
+  //       description: "Listing has been submitted to the system.",
+  //       status: "success",
+  //       duration: 9000,
+  //       isClosable: true,
+  //     });
+  //   }
+  // };
+
+  useEffect(() => {
+    console.log(amountEthers);
+    console.log(state2);
+    if (amountEthers && paymentMethod) {
+      console.log("masuk");
       const dataList: Listing = {
         walletAddress: address.toString(),
         token: token,
@@ -45,26 +103,16 @@ function Createlisting() {
         name: name,
         accountNumber: accountNumber,
       };
-      //TODO submit transaction to on-chain
-      router.push("/");
-      toast({
-        title: "Listing Submitted.",
-        description: "Listing has been submitted to the system.",
-        status: "success",
-        duration: 9000,
-        isClosable: true,
-      });
+      setData2(dataList);
+      setState2(true);
     }
-  };
+  }, [amountEthers, paymentMethod]);
 
   return (
     <div>
-        <Navbar />
+      <Navbar />
       <div className="p-8">
-      
-        <h1 className="text-3xl font-semibold mb-2 ml-4">
-          Create Listing
-        </h1>
+        <h1 className="text-3xl font-semibold mb-2 ml-4">Create Listing</h1>
 
         <div className="flex justify-around p-4 gap-5">
           <div className="w-1/2">
@@ -113,14 +161,16 @@ function Createlisting() {
                       )?.formatted;
                       setBalance(balance || "");
                     }}
-                  />
-                  {tokenOption.map((token, key) => {
-                    return (
-                      <option key={key} value={token.symbol}>
-                        {token.symbol}
-                      </option>
-                    );
-                  })}
+                  >
+                    {" "}
+                    {tokenOption.map((token, key) => {
+                      return (
+                        <option key={key} value={token.symbol}>
+                          {token.symbol}
+                        </option>
+                      );
+                    })}
+                  </Select>
                 </div>
                 <Text fontSize="lg" as="b" className="mt-3">
                   Amount
@@ -128,7 +178,10 @@ function Createlisting() {
                 <Input
                   variant="outline"
                   placeholder={amount.toString()}
-                  onChange={(e) => setAmount(e.target.value)}
+                  onChange={(e) => {
+                    setAmount(Number(e.target.value));
+                    setAmountEthers(ethers.utils.parseEther(e.target.value));
+                  }}
                 />
                 {/* <Divider className="mt-2" /> */}
                 <div className="mt-3">
@@ -148,9 +201,7 @@ function Createlisting() {
                     Price
                   </Text>
                   <Input
-                    variant="filled"
-                    className="cursor-not-allowed pointer-events-none"
-                    placeholder={price}
+                    placeholder={price.toString()}
                     type="number"
                     onChange={(e) => setPrice(Number(e.target.value))}
                   />
@@ -210,12 +261,23 @@ function Createlisting() {
                   />
                 </div>
                 <div className="my-4">
-                  <button
-                    className="bg-green-main text-white font-bold py-2 px-4 rounded"
-                    onClick={handleSubmit}
-                  >
-                    Submit
-                  </button>
+                  {state2 ? (
+                    <CreateListing
+                      amountEthers={amountEthers}
+                      paymentMethod={paymentMethod}
+                      data={data2 || {}}
+                    />
+                  ) : (
+                    <></>
+                  )}
+
+                  {/* {state2 ?? (
+                    <CreateListing
+                      amountEthers={amountEthers}
+                      paymentMethod={paymentMethod}
+                      data={data2 || {}}
+                    />
+                  )} */}
                 </div>
               </CardBody>
             </Card>

@@ -1,4 +1,5 @@
 import { Listing } from "@/schema/createListing";
+import { Transaction } from "@/schema/transaction";
 import { createClient } from "@supabase/supabase-js";
 
 export function getSupabase() {
@@ -137,6 +138,54 @@ export const rejectOffer = async (id: number) => {
       })
       .eq("id", id);
     console.log(data);
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const fetchAcceptedOffers = async (address: string) => {
+  try {
+    const supabase = getSupabase();
+    const { data, error } = await supabase
+      .from("notification")
+      .select()
+      .eq("buyer_address", address)
+      .eq("status", "ACCEPTED");
+    console.log(data);
+    return data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const fetchListingById = async (id: number) => {
+  try {
+    const supabase = getSupabase();
+    const { data, error } = await supabase
+      .from("listing")
+      .select()
+      .eq("id", id);
+    console.log(data);
+    return data;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const insertTransaction = async (dataTr: Transaction) => {
+  try {
+    const supabase = getSupabase();
+    const { data, error } = await supabase
+      .from("Transaction")
+      .insert({
+        contract_address: dataTr.contractAddress,
+        buyer_address: dataTr.buyerAddress,
+        seller_address: dataTr.sellerAddress,
+        status: "ONGOING",
+      })
+      .select();
+    console.log(data);
+    return data;
   } catch (e) {
     console.log(e);
   }

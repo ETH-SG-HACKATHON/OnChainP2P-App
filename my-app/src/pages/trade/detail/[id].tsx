@@ -1,24 +1,43 @@
 import { BuyerPov } from "@/components/Buyer/BuyerPov";
 import { Button } from "@chakra-ui/react";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useToast } from "@chakra-ui/react";
-import { sendNotificationToSeller } from "@/shared/utils";
+import { fetchListingById, sendNotificationToSeller } from "@/shared/utils";
 import { useAccount } from "wagmi";
 import Navbar from "@/components/Navbar/Navbar";
 import img from "../../../../public/USDC.png";
+import { useRouter } from "next/router";
 
 function BuyerDetailPage() {
   const [state, setState] = useState(true);
   const [sellerAddress, setSellerAddress] = useState("");
+  const [dataFetch, setDataFetch] = useState<any[]>([]);
   const [listingId, setListingId] = useState(0);
   const { address } = useAccount();
   const toast = useToast();
+  const router = useRouter();
+
+  const { id } = router.query;
 
   const handleBuyPending = async () => {
-    if (address)
-      await sendNotificationToSeller(sellerAddress, address, listingId);
+    if (address) console.log(listingId);
+    console.log(sellerAddress);
+    await sendNotificationToSeller(sellerAddress, address, listingId);
   };
+
+  useEffect(() => {
+    const getDataListing = async () => {
+      setListingId(id);
+      const data = await fetchListingById(id);
+      console.log(data);
+      setSellerAddress(data[0]?.wallet_address);
+      setListingId(data[0]?.id);
+      setDataFetch(data);
+    };
+    getDataListing();
+  }, []);
+
   return (
     <div>
       <Navbar />
@@ -41,25 +60,25 @@ function BuyerDetailPage() {
             {/* Details */}
             <div className=" flex flex-col gap-5">
               <h1 className="flex items-center rounded-xl pl-[10px] border-2 w-[500px] h-[40px] ">
-                Wallet Address: 1
+                Wallet Address: {dataFetch[0].wallet_address}
               </h1>
               <h1 className="flex items-center rounded-xl pl-[10px] border-2 w-[500px] h-[40px] ">
-                Token: Lorem Ipsum
+                Token: {dataFetch[0].token}
               </h1>
               <h1 className="flex items-center rounded-xl pl-[10px] border-2 w-[500px] h-[40px] ">
-                Amount:{" "}
+                Amount:{dataFetch[0].amount}
               </h1>
               <h1 className="flex items-center rounded-xl pl-[10px] border-2 w-[500px] h-[40px] ">
-                Price:{" "}
+                Price:{dataFetch[0].price}
               </h1>
               <h1 className="flex items-center rounded-xl pl-[10px] border-2 w-[500px] h-[40px] ">
-                Duration:{" "}
+                Duration:{dataFetch[0].duration}
               </h1>
               <h1 className="flex items-center rounded-xl pl-[10px] border-2 w-[500px] h-[40px] ">
-                Payment Method
+                Payment Method: {dataFetch[0].payment_method}
               </h1>
               <h1 className="flex items-center rounded-xl pl-[10px] border-2 w-[500px] h-[40px] ">
-                Name:{" "}
+                Name:{dataFetch[0].name}
               </h1>
             </div>
 
@@ -67,6 +86,7 @@ function BuyerDetailPage() {
             <div className="flex mt-5 gap-5">
               <button
                 onClick={() => {
+                  handleBuyPending();
                   toast({
                     title: "Notification is Send.",
                     description: "Notification is send to the seller.",

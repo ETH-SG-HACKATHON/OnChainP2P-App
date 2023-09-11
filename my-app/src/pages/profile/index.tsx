@@ -1,13 +1,19 @@
+import { CardOnDeals } from "@/components/Card/CardOnDeals";
 import { CardProfileList } from "@/components/Card/CardProfileList";
 import Navbar from "@/components/Navbar/Navbar";
 import { CardProfileListing } from "@/schema/Card/cardListing";
-import { getListingFromSupabase } from "@/shared/utils";
+import {
+  fetchAcceptedOffers,
+  fetchListingById,
+  getListingFromSupabase,
+} from "@/shared/utils";
 
 import { use, useEffect, useState } from "react";
 import { useAccount } from "wagmi";
 
 function ProfilePage() {
   const [result, setResult] = useState<any[]>([]); // [Listing, Listing, Listing
+  const [deals, setDeals] = useState<any[]>([]);
   const { address } = useAccount();
   useEffect(() => {
     const getListing = async () => {
@@ -15,15 +21,29 @@ function ProfilePage() {
       console.log(data);
       setResult(data || []);
     };
+    const fetchListing = async () => {
+      console.log(address?.toString());
+      const data = await fetchAcceptedOffers(address?.toString());
+      console.log(data);
+      if (!data) return;
+      let arr: any[] = [];
+      data.map(async (item) => {
+        const data2 = await fetchListingById(item.listing_id);
+        console.log(data2[0].id);
+        arr.push(data2[0].id);
+        setDeals(arr);
+      });
+      console.log(arr);
+    };
     getListing();
+    fetchListing();
   }, []);
   return (
     <div>
-      <Navbar/>
+      <Navbar />
       <div className="px-[80px] pt-[20px]">
         <div>Profile Page</div>
         <hr></hr>
-
 
         <div>
           <div>
@@ -59,20 +79,28 @@ function ProfilePage() {
             </div>
           </div>
           <hr></hr>
-
-
-          <div>
-            <h1>On Going Deals</h1>
-            <h1></h1>
-
-            
+        </div>
+        <hr></hr>
+        <div>
+          <h1>On Going Deals</h1>
+          <div className="grid grid-cols-5 gap-4">
+            {deals.map((item, index) => {
+              return (
+                <CardOnDeals
+                  id={item}
+                  key={index}
+                  token={item.token}
+                  amount={item.amount}
+                  price={item.price}
+                  duration={(item.duration / 60).toString()}
+                />
+              );
+            })}
           </div>
-          <hr></hr>
-
-
-          <div>
-            <h1>On Going Buy</h1>
-          </div>
+        </div>
+        <hr></hr>
+        <div>
+          <h1>On Going Buy</h1>
         </div>
       </div>
     </div>
