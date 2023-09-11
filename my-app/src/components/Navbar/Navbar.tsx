@@ -38,7 +38,7 @@ const Navbar = () => {
       return;
     }
 
-    router.push(`/profile/${address}`);
+    router.push(`/profile`);
   };
 
   const handleSwap = () =>{

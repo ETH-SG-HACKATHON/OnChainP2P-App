@@ -9,7 +9,7 @@ import Navbar from "@/components/Navbar/Navbar";
 import img from "../../../../public/USDC.png";
 
 function BuyerDetailPage() {
-  const [state, setState] = useState(false);
+  const [state, setState] = useState(true);
   const [sellerAddress, setSellerAddress] = useState("");
   const [listingId, setListingId] = useState(0);
   const { address } = useAccount();
@@ -38,22 +38,34 @@ function BuyerDetailPage() {
           </div> */}
 
           <div className="p-[40px]">
-
-          
             {/* Details */}
             <div className=" flex flex-col gap-5">
-              <h1 className="flex items-center rounded-xl pl-[10px] border-2 w-[500px] h-[40px] ">Wallet Address: 1</h1>
-              <h1 className="flex items-center rounded-xl pl-[10px] border-2 w-[500px] h-[40px] ">Token: Lorem Ipsum</h1>
-              <h1 className="flex items-center rounded-xl pl-[10px] border-2 w-[500px] h-[40px] ">Amount: </h1>
-              <h1 className="flex items-center rounded-xl pl-[10px] border-2 w-[500px] h-[40px] ">Price: </h1>
-              <h1 className="flex items-center rounded-xl pl-[10px] border-2 w-[500px] h-[40px] ">Duration: </h1>
-              <h1 className="flex items-center rounded-xl pl-[10px] border-2 w-[500px] h-[40px] ">Payment Method</h1>
-              <h1 className="flex items-center rounded-xl pl-[10px] border-2 w-[500px] h-[40px] ">Name: </h1>
+              <h1 className="flex items-center rounded-xl pl-[10px] border-2 w-[500px] h-[40px] ">
+                Wallet Address: 1
+              </h1>
+              <h1 className="flex items-center rounded-xl pl-[10px] border-2 w-[500px] h-[40px] ">
+                Token: Lorem Ipsum
+              </h1>
+              <h1 className="flex items-center rounded-xl pl-[10px] border-2 w-[500px] h-[40px] ">
+                Amount:{" "}
+              </h1>
+              <h1 className="flex items-center rounded-xl pl-[10px] border-2 w-[500px] h-[40px] ">
+                Price:{" "}
+              </h1>
+              <h1 className="flex items-center rounded-xl pl-[10px] border-2 w-[500px] h-[40px] ">
+                Duration:{" "}
+              </h1>
+              <h1 className="flex items-center rounded-xl pl-[10px] border-2 w-[500px] h-[40px] ">
+                Payment Method
+              </h1>
+              <h1 className="flex items-center rounded-xl pl-[10px] border-2 w-[500px] h-[40px] ">
+                Name:{" "}
+              </h1>
             </div>
 
             {/* Button */}
             <div className="flex mt-5 gap-5">
-              <Button
+              <button
                 onClick={() => {
                   toast({
                     title: "Notification is Send.",
@@ -63,15 +75,12 @@ function BuyerDetailPage() {
                     isClosable: true,
                   });
                 }}
+                className="w-[100px] bg-green-main hover:bg-green-main text-white font-semibold py-2 px-4 rounded-full"
               >
                 Buy
-              </Button>
-              <Button>Chat</Button>
+              </button>
             </div>
-
-            </div>
-
-
+          </div>
         </div>
         {state ? <BuyerPov /> : <></>}
       </div>
