@@ -16,14 +16,12 @@ function BuyerDetailPage() {
   const [listingId, setListingId] = useState(0);
   const { address } = useAccount();
   const toast = useToast();
-  const router = useRouter();
 
-  const { id } = router.query;
 
   const handleBuyPending = async () => {
-    if (address) console.log(listingId);
-    console.log(sellerAddress);
-    await sendNotificationToSeller(sellerAddress, address, listingId);
+    // if (address) console.log(listingId);
+    // console.log(sellerAddress);
+    // await sendNotificationToSeller(sellerAddress, address, listingId);
   };
 
   const router = useRouter();
