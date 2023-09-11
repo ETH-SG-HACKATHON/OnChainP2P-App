@@ -3,6 +3,8 @@ import { CardProfileList } from "@/components/Card/CardProfileList";
 import Navbar from "@/components/Navbar/Navbar";
 import { CardProfileListing } from "@/schema/Card/cardListing";
 import {
+  checkBuyerContractDeployed,
+  checkSellerContractDeployed,
   fetchAcceptedOffers,
   fetchListingById,
   getListingFromSupabase,
@@ -16,6 +18,9 @@ function ProfilePage() {
   const [deals, setDeals] = useState<any[]>([]);
   const { address } = useAccount();
   useEffect(() => {
+    if (address) {
+      setAddressR(address?.toString());
+    }
     const getListing = async () => {
       const data = await getListingFromSupabase(address?.toString() || "");
       console.log(data);
@@ -23,17 +28,21 @@ function ProfilePage() {
     };
     const fetchListing = async () => {
       console.log(address?.toString());
-      const data = await fetchAcceptedOffers(address?.toString());
-      console.log(data);
-      if (!data) return;
-      let arr: any[] = [];
-      data.map(async (item) => {
-        const data2 = await fetchListingById(item.listing_id);
-        console.log(data2[0].id);
-        arr.push(data2[0].id);
-        setDeals(arr);
-      });
-      console.log(arr);
+      if (address) {
+        const data = await fetchAcceptedOffers(address?.toString());
+        console.log(data);
+        if (!data) return;
+        let arr: any[] = [];
+        data.map(async (item) => {
+          const data2 = await fetchListingById(item.listing_id);
+          if (data2) {
+            console.log("ini data", data2[0].id);
+            arr.push(data2[0].id);
+          }
+          setDeals(arr);
+        });
+        console.log(arr);
+      }
     };
     getListing();
     fetchListing();

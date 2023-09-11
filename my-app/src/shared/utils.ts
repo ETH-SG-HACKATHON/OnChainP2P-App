@@ -37,6 +37,21 @@ export async function insertListingToSupabase(listData: Listing) {
   }
 }
 
+export async function fetchNotification(address: string) {
+  try {
+    const supabase = getSupabase();
+    const { data, error } = await supabase
+      .from("notification")
+      .select()
+      .eq("seller_address", address)
+      .eq("status", "PENDING");
+    console.log(data);
+    return data;
+  } catch (e) {
+    console.log(e);
+  }
+}
+
 export async function getListingFromSupabase(address: string) {
   try {
     const supabase = getSupabase();
@@ -68,17 +83,13 @@ export async function getListingFromSupabaseId(id: number) {
 export async function getAllListingFromSupabase() {
   try {
     const supabase = getSupabase();
-    const { data, error } = await supabase
-      .from("listing")
-      .select()
+    const { data, error } = await supabase.from("listing").select();
     console.log(data);
     return data;
   } catch (e) {
     console.log(e);
   }
 }
-
-
 
 export async function addImageToSupabase(image: any) {
   try {
@@ -229,6 +240,45 @@ export async function getTransactionFromSupabase(address: string) {
       .eq("wallet_address", address);
     console.log(data);
     return data;
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+export async function checkUserOrSeller(address: string) {
+  try {
+    const supabase = getSupabase();
+    const { data, error } = await supabase
+      .from("Transaction")
+      .select()
+      .eq("status", "ONGOING")
+      .eq("buyer_address", address);
+    console.log(data);
+    if (!data || data.length < 0) {
+      console.log("ini dapet nya 1");
+      return 1;
+    } else if (data) {
+      console.log("ini dapet nya 2");
+      return 2;
+    } else {
+      console.log("ini dapet nya 3");
+      return 3;
+    }
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+export async function checkUserOrSeller2(address: string) {
+  try {
+    const supabase = getSupabase();
+    const { data, error } = await supabase
+      .from("Transaction")
+      .select()
+      .eq("status", "ONGOING")
+      .eq("seller_address", address);
+    console.log(data);
+    return true;
   } catch (e) {
     console.log(e);
   }

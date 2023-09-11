@@ -42,7 +42,7 @@ export const CardOnDeals = ({
 
   const watchEvent = watchContractEvent(
     {
-      address: "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512",
+      address: "0x1a8a56a0b9c7a6f02dbc129d4e5e52c18206ad2c",
       abi: escrow.abi,
       eventName: "EscrowCreated",
     },
@@ -59,12 +59,16 @@ export const CardOnDeals = ({
       const data = await fetchListingById(id);
       if (data[0]?.status == "") setState(false);
       console.log(data);
-      setResult(data);
-      setSellerAddress(data[0]?.wallet_address);
-      setListId(data[0]?.id);
-      setAddressR(address?.toString());
-      console.log(ethers.utils.parseEther(data[0]?.amount.toString()));
-      setValue(data[0]?.amount);
+      if (data && address) {
+        if (data[0]?.status == "DONE") setState(false);
+        console.log(state);
+        setResult(data);
+        setSellerAddress(data[0]?.wallet_address);
+        setListId(data[0]?.id);
+        setAddressR(address?.toString());
+        console.log(ethers.utils.parseEther(data[0]?.amount.toString()));
+        setValue(data[0]?.amount);
+      }
     };
     fetchData();
   }, []);

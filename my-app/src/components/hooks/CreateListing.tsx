@@ -21,7 +21,7 @@ export const CreateListing = ({
   const router = useRouter();
   const toast = useToast();
   const { config } = usePrepareContractWrite({
-    address: "0xabc39c8550e42ef9ba6aafae47a27a2774977a5d",
+    address: "0x1a8a56a0b9c7a6f02dbc129d4e5e52c18206ad2c",
     abi: listing.abi,
     functionName: "createAd",
     args: [

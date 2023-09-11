@@ -91,7 +91,7 @@ function Createlisting() {
   useEffect(() => {
     console.log(amountEthers);
     console.log(state2);
-    if (amountEthers && paymentMethod) {
+    if (amountEthers && paymentMethod && address) {
       console.log("masuk");
       const dataList: Listing = {
         walletAddress: address.toString(),
@@ -261,11 +261,11 @@ function Createlisting() {
                   />
                 </div>
                 <div className="my-4">
-                  {state2 ? (
+                  {data2 && state2 ? (
                     <CreateListing
                       amountEthers={amountEthers}
                       paymentMethod={paymentMethod}
-                      data={data2 || {}}
+                      data={data2}
                     />
                   ) : (
                     <></>

@@ -1,9 +1,11 @@
 import { BuyerPov } from "@/components/Buyer/BuyerPov";
 import { useEffect, useState } from "react";
-import { useToast } from "@chakra-ui/react";
+import { Button, useToast } from "@chakra-ui/react";
 import {
-  getListingFromSupabaseId,
-  getTransactionFromSupabase,
+  checkUserOrSeller,
+  checkUserOrSeller2,
+  fetchListingById,
+  sendNotificationToSeller,
 } from "@/shared/utils";
 import { useAccount } from "wagmi";
 import Navbar from "@/components/Navbar/Navbar";
@@ -14,13 +16,23 @@ function BuyerDetailPage() {
   const [sellerAddress, setSellerAddress] = useState("");
   const [dataFetch, setDataFetch] = useState<any[]>([]);
   const [listingId, setListingId] = useState(0);
+  const [states, setStates] = useState(0);
+  const [deposit, setDeposit] = useState(false);
 
   const toast = useToast();
+  const { address } = useAccount();
 
   const handleBuyPending = async () => {
-    // if (address) console.log(listingId);
-    // console.log(sellerAddress);
-    // await sendNotificationToSeller(sellerAddress, address, listingId);
+    if (address) {
+      console.log(listingId);
+      console.log(sellerAddress);
+
+      await sendNotificationToSeller(
+        sellerAddress,
+        address?.toString(),
+        listingId
+      );
+    }
   };
 
   const router = useRouter();
@@ -28,50 +40,47 @@ function BuyerDetailPage() {
   const [listings, setListings] = useState<any[]>([]); // Adjust the type as needed
 
   useEffect(() => {
-    // Ensure that this code only runs on the client
-    if (typeof window !== "undefined") {
+    const getDataListing = async () => {
       if (id) {
-        async function fetchData() {
-          //IGNORE AJA GPP
-          try {
-            const data = await getListingFromSupabaseId(id);
-            setListings(data);
-            setWalletAddress(data[0].wallet_address);
-          } catch (error) {
-            console.error("Error fetching data:", error);
-          }
+        setListingId(Number(id));
+        console.log(id);
+        const data = await fetchListingById(Number(id));
+        console.log(data);
+        if (data) {
+          setSellerAddress(data[0]?.wallet_address || "");
+          setListingId(data[0]?.id || "");
+          setDataFetch(data);
         }
-
-        // Call the fetchData function to initiate data retrieval when the component mounts
-        fetchData();
       }
-    }
+    };
+    getDataListing();
   }, [id]);
-
-  const [walletAddress, setWalletAddress] = useState("");
-  const [transaction, setTransaction] = useState<any[]>([]);
 
   useEffect(() => {
-    // Ensure that this code only runs on the client
-    if (typeof window !== "undefined") {
-      if (id) {
-        async function fetchData() {
-          //IGNORE AJA GPP
-          try {
-            const data = await getTransactionFromSupabase(walletAddress);
-            setTransaction(data);
-            console.log("transaction"), data;
-          } catch (error) {
-            console.error("Error fetching data:", error);
-          }
+    const check = async () => {
+      if (address) {
+        const test = await checkUserOrSeller(address.toString());
+        if (test === 1) {
+          setStates(1);
+        } else if (test === 2) {
+          setStates(2);
+        } else {
+          setStates(3);
         }
-
-        // Call the fetchData function to initiate data retrieval when the component mounts
-        fetchData();
       }
-    }
-  }, [id]);
+    };
+    check();
+  }, []);
 
+  useEffect(() => {
+    const checkPossibleDeposit = async () => {
+      if (address) {
+        const test = await checkUserOrSeller2(address.toString());
+        setDeposit(true);
+      }
+    };
+    checkPossibleDeposit();
+  }, []);
   return (
     <div>
       <Navbar />
@@ -81,7 +90,7 @@ function BuyerDetailPage() {
 
           <div className="p-[40px]">
             <div>
-              {listings.map((listing) => {
+              {dataFetch.map((listing) => {
                 return (
                   <div key={listing.id} className="flex flex-col gap-5">
                     <h1 className="flex items-center rounded-xl pl-[10px] border-2 w-[500px] h-[80px] ">
@@ -114,8 +123,24 @@ function BuyerDetailPage() {
             </div>
 
             {/* Button */}
+            {states === 1 ? (
+              <div>
+                <Button>Waiting for buyer to transfer</Button>
+              </div>
+            ) : (
+              <></>
+            )}
+            {states === 2 ? (
+              <div>
+                <Button>Waiting for seller to deposit</Button>
+                {deposit ? <Button>Deposit</Button> : <></>}
+              </div>
+            ) : (
+              <></>
+            )}
+            {states === 3 ? <Button>Buy</Button> : <></>}
 
-            <div className="flex mt-5 gap-5">
+            {/* <div className="flex mt-5 gap-5">
               <button
                 onClick={() => {
                   handleBuyPending();
@@ -132,10 +157,8 @@ function BuyerDetailPage() {
                 }}
                 className="w-[100px] bg-red-500 hover:bg-green-main text-white font-semibold py-2 px-4 rounded-full"
               >
-                DEPLOY
-              </button>
-              
-            </div>
+                payment proof
+              </button> */}
           </div>
         </div>
         {state ? <BuyerPov /> : <></>}

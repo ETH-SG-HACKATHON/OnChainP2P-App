@@ -16,10 +16,10 @@ export const DeployEscrowContract = ({
   listId,
 }: DeployEscrowContractProps) => {
   const { config } = usePrepareContractWrite({
-    address: "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512",
+    address: "0x1a8a56a0b9c7a6f02dbc129d4e5e52c18206ad2c",
     abi: escrow.abi,
-    functionName: "createEscrow",
-    args: [value, sellerAddress, addressR, listId],
+    functionName: "startTrade",
+    args: [listId],
     onError: (error) => {
       console.log(value);
       console.log(error);
