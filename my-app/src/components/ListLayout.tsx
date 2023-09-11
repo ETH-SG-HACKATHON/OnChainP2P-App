@@ -1,53 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useAccount } from "wagmi";
 import { useToast } from "@chakra-ui/react";
 import ListCard from "./Card/ListCard";
-
-const DummyList = [
-  {
-    id: 1,
-    idr: 15000,
-    usdt: 1000,
-    sAddress: "0x1234567890",
-  },
-  {
-    id: 2,
-    idr: 16000,
-    usdt: 2000,
-    sAddress: "0x2457112314",
-  },
-  {
-    id: 3,
-    idr: 15500,
-    usdt: 3000,
-    sAddress: "0x3349875092",
-  },
-  {
-    id: 4,
-    idr: 17000,
-    usdt: 4000,
-    sAddress: "0x4867234124",
-  },
-  {
-    id: 5,
-    idr: 14900,
-    usdt: 5000,
-    sAddress: "0x5823478523",
-  },
-];
-
-interface Dummy {
-  id: number;
-  idr: number;
-  usdt: number;
-  sAddress: string;
-}
+import { getAllListingFromSupabase } from "@/shared/utils";
 
 const ListLayout = () => {
-  const [dummy, setDummy] = useState<Dummy[]>(DummyList);
+  const [listings, setListings] = useState<any[]>([]);
   const router = useRouter();
   const toast = useToast();
+
+  const { address, isConnecting, isDisconnected } = useAccount();
 
   const handleClick = () => {
     if (isDisconnected) {
@@ -63,7 +26,19 @@ const ListLayout = () => {
     router.push("/create-listing");
   };
 
-  const { address, isConnecting, isDisconnected } = useAccount();
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const data = await getAllListingFromSupabase();
+
+        setListings(data);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    }
+
+    fetchData();
+  }, []);
 
   return (
     <div className="mt-10">
@@ -73,15 +48,16 @@ const ListLayout = () => {
       >
         Create Listing
       </button>
-      <div className="flex flex-row justify-center items-center h-[900px]">
+      <div className="flex flex-row justify-center items-center h-[1150px]">
         {/* play with width for centering */}
         <div className="flex flex-wrap w-[1300px] gap-4">
-          {dummy.map((item, key) => (
+          {listings.map((listing, key) => (
             <ListCard
-              id={item.id}
-              idr={item.idr}
-              usdt={item.usdt}
-              sAddress={item.sAddress}
+              token={listing.token}
+              price={listing.price}
+              amount={listing.amount}
+              duration={listing.duration}
+              id={listing.id}
               key={key}
             />
           ))}
