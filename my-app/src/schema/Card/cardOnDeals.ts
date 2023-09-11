@@ -4,4 +4,5 @@ export interface CardOnDealsProps {
   amount: number;
   price: number;
   duration: string;
+  state: string;
 }

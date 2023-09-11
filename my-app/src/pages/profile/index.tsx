@@ -3,9 +3,14 @@ import { CardProfileList } from "@/components/Card/CardProfileList";
 import Navbar from "@/components/Navbar/Navbar";
 import { CardProfileListing } from "@/schema/Card/cardListing";
 import {
+  checkBuyerContractDeployed,
+  checkContractDeployed,
+  checkSellerContractDeployed,
   fetchAcceptedOffers,
   fetchListingById,
+  fetchListingByIdDone,
   getListingFromSupabase,
+  getListingFromSupabaseDone,
 } from "@/shared/utils";
 
 import { use, useEffect, useState } from "react";
@@ -14,10 +19,13 @@ import { useAccount } from "wagmi";
 function ProfilePage() {
   const [result, setResult] = useState<any[]>([]); // [Listing, Listing, Listing
   const [deals, setDeals] = useState<any[]>([]);
+  const [addressR, setAddressR] = useState("");
+  const [state, setState] = useState("first");
   const { address } = useAccount();
   useEffect(() => {
+    setAddressR(address?.toString());
     const getListing = async () => {
-      const data = await getListingFromSupabase(address?.toString() || "");
+      const data = await getListingFromSupabaseDone(address?.toString() || "");
       console.log(data);
       setResult(data || []);
     };
@@ -29,7 +37,7 @@ function ProfilePage() {
       let arr: any[] = [];
       data.map(async (item) => {
         const data2 = await fetchListingById(item.listing_id);
-        console.log(data2[0].id);
+        console.log("ini data", data2[0].id);
         arr.push(data2[0].id);
         setDeals(arr);
       });
@@ -37,6 +45,24 @@ function ProfilePage() {
     };
     getListing();
     fetchListing();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await checkBuyerContractDeployed(address?.toString() || "");
+      console.log(data, "alknfleisnfle");
+      const data2 = await checkSellerContractDeployed(
+        address?.toString() || ""
+      );
+      console.log(data2, "alknfleisnfle");
+      if (data && !data2) {
+        setState("second");
+      } else if (!data && data2) {
+        setState("third");
+      } else {
+      }
+    };
+    fetchData();
   }, []);
   return (
     <div>
@@ -93,6 +119,7 @@ function ProfilePage() {
                   amount={item.amount}
                   price={item.price}
                   duration={(item.duration / 60).toString()}
+                  state={state}
                 />
               );
             })}
