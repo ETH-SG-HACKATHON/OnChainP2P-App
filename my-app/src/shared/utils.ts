@@ -50,6 +50,20 @@ export async function getListingFromSupabase(address: string) {
   }
 }
 
+export async function getListingFromSupabaseId(id: number) {
+  try {
+    const supabase = getSupabase();
+    const { data, error } = await supabase
+      .from("listing")
+      .select()
+      .eq("id", id);
+    console.log(data);
+    return data;
+  } catch (e) {
+    console.log(e);
+  }
+}
+
 export async function getAllListingFromSupabase() {
   try {
     const supabase = getSupabase();

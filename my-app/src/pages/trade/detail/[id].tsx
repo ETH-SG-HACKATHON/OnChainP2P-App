@@ -2,7 +2,7 @@ import { BuyerPov } from "@/components/Buyer/BuyerPov";
 import { useEffect, useState } from "react";
 import { useToast } from "@chakra-ui/react";
 import {
-  getListingFromSupabase,
+  getListingFromSupabaseId,
   sendNotificationToSeller,
 } from "@/shared/utils";
 import { useAccount } from "wagmi";
@@ -26,22 +26,23 @@ function BuyerDetailPage() {
   const [listings, setListings] = useState<any[]>([]); // Adjust the type as needed
 
   useEffect(() => {
-    // Define an async function inside useEffect to perform the data fetching
-    async function fetchData() {
-      try {
-        const address = "your_wallet_address_here"; // Replace with the desired wallet address
-        const data = await getListingFromSupabase(id);
-
-        // Set the retrieved data to the 'listings' state
-        setListings(data);
-      } catch (error) {
-        console.error("Error:", error);
+    // Ensure that this code only runs on the client
+    if (typeof window !== "undefined") {
+      if (id) {
+        async function fetchData() { //IGNORE AJA GPP
+          try {
+            const data = await getListingFromSupabaseId(id);
+            setListings(data);
+          } catch (error) {
+            console.error("Error fetching data:", error);
+          }
+        }
+        
+        // Call the fetchData function to initiate data retrieval when the component mounts
+        fetchData();
       }
     }
-
-    // Call the fetchData function to initiate data retrieval when the component is mounted
-    fetchData();
-  }, []);
+  }, [id]);
 
   return (
     <div>
