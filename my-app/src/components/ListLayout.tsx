@@ -48,7 +48,7 @@ const ListLayout = () => {
       >
         Create Listing
       </button>
-      <div className="flex flex-row justify-center items-center h-[900px]">
+      <div className="flex flex-row justify-center items-center h-[1150px]">
         {/* play with width for centering */}
         <div className="flex flex-wrap w-[1300px] gap-4">
           {listings.map((listing, key) => (
