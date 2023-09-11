@@ -10,6 +10,7 @@ import {
   lineaTestnet,
   mantleTestnet,
   Chain,
+  goerli,
 } from "viem/chains";
 import { configureChains, mainnet, createConfig, WagmiConfig } from "wagmi";
 import { alchemyProvider } from "wagmi/providers/alchemy";
@@ -19,7 +20,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 
 export default function App({ Component, pageProps }: AppProps) {
   const { chains, publicClient } = configureChains(
-    [mainnet, polygon, optimism, arbitrum, base, zora, mantleTestnet],
+    [mainnet, polygon, optimism, arbitrum, base, zora, mantleTestnet,goerli],
     [
       alchemyProvider({ apiKey: process.env.ALCHEMY_ID || "" }),
       publicProvider(),
