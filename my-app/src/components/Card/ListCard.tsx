@@ -13,15 +13,16 @@ import {
 
   
   interface ListCardProps {
+    id: number;
     idr: number;
     usdt: number;
     sAddress: string;
   }
   
-  const ListCard = ({ idr, usdt, sAddress }: ListCardProps) => {
+  const ListCard = ({ idr, usdt, sAddress, id }: ListCardProps) => {
   
     const handleTrade = ()=> {
-      router.push(`/trade/${sAddress}`);
+      router.push(`/trade/detail/${id}`);
   
     }
     return (

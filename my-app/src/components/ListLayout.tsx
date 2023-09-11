@@ -6,26 +6,31 @@ import ListCard from "./Card/ListCard";
 
 const DummyList = [
   {
+    id: 1,
     idr: 15000,
     usdt: 1000,
     sAddress: "0x1234567890",
   },
   {
+    id: 2,
     idr: 16000,
     usdt: 2000,
     sAddress: "0x2457112314",
   },
   {
+    id: 3,
     idr: 15500,
     usdt: 3000,
     sAddress: "0x3349875092",
   },
   {
+    id: 4,
     idr: 17000,
     usdt: 4000,
     sAddress: "0x4867234124",
   },
   {
+    id: 5,
     idr: 14900,
     usdt: 5000,
     sAddress: "0x5823478523",
@@ -33,6 +38,7 @@ const DummyList = [
 ];
 
 interface Dummy {
+  id: number;
   idr: number;
   usdt: number;
   sAddress: string;
@@ -72,6 +78,7 @@ const ListLayout = () => {
         <div className="flex flex-wrap w-[1300px] gap-4">
           {dummy.map((item, key) => (
             <ListCard
+              id={item.id}
               idr={item.idr}
               usdt={item.usdt}
               sAddress={item.sAddress}
