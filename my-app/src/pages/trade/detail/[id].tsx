@@ -22,18 +22,18 @@ function BuyerDetailPage() {
   const toast = useToast();
   const { address, isConnecting, isDisconnected } = useAccount();
 
-  // const handleBuyPending = async () => {
-  //   if (address) {
-  //     console.log(listingId);
-  //     console.log(sellerAddress);
+  const handleBuyPending = async () => {
+    if (address) {
+      console.log(listingId);
+      console.log(sellerAddress);
 
-  //     await sendNotificationToSeller(
-  //       sellerAddress,
-  //       address?.toString(),
-  //       listingId
-  //     );
-  //   }
-  // };
+      await sendNotificationToSeller(
+        sellerAddress,
+        address?.toString(),
+        listingId
+      );
+    }
+  };
 
   const router = useRouter();
   const { id } = router.query;
@@ -82,15 +82,10 @@ function BuyerDetailPage() {
   //   checkPossibleDeposit();
   // }, []);
 
-
-  const  handleBuy = () => {
-    setStates(2)
-    
-
-
-
-
-  }
+  
+  // const  handleBuy = () => {
+  //   setStates(2)
+  // }
 
 
   return (
@@ -141,7 +136,7 @@ function BuyerDetailPage() {
                 <div>
                   {address !== sellerAddress ? (
                     // Render the "Buy" button if the address is not equal to the seller's address
-                    <button onClick={handleBuy}>Buy</button>
+                    <button onClick={handleBuyPending}>Buy</button>
                   ) : (
                     // Render a message if the address is equal to the seller's address
                     <p>none</p>
