@@ -42,7 +42,7 @@ export const CardOnDeals = ({
 
   const watchEvent = watchContractEvent(
     {
-      address: "0x1a8a56a0b9c7a6f02dbc129d4e5e52c18206ad2c",
+      address: "0xce6a29493983B221532205bC422F5759F89dFE8F",
       abi: escrow.abi,
       eventName: "EscrowCreated",
     },
