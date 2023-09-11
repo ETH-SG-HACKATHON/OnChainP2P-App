@@ -5,6 +5,8 @@ import { useState } from "react";
 import { useToast } from "@chakra-ui/react";
 import { sendNotificationToSeller } from "@/shared/utils";
 import { useAccount } from "wagmi";
+import Navbar from "@/components/Navbar/Navbar";
+import img from "../../../../public/USDC.png";
 
 function BuyerDetailPage() {
   const [state, setState] = useState(false);
@@ -19,28 +21,38 @@ function BuyerDetailPage() {
   };
   return (
     <div>
-      <div>Buyer Detail Page</div>
-      <div className="flex justify-between px-[200px] border-[10px]">
-        <div>
+      <Navbar />
+      <div className="h-[700px] flex flex-col items-center mt-[50px]">
+        <div className="border-[10px] w-[600px] h-[650px] rounded-3xl">
+          <h1 className=" mx-8 my-3 text-2xl font-bold"> Listing details </h1>
+
           {/* Image */}
-          <div>
+          {/* <div className="flex flex-col justify-center items-center my-[50px]">
             <Image
-              src="/dummy-image.jpeg"
+              src={img}
               width={200}
               height={200}
               alt="Image"
+              className="text-center"
             />
-          </div>
-        </div>
-        <div>
-          {/* Details */}
-          <div>
-            <h1>Test data</h1>
-            <div className="mb-[10px]">
-              <p>Offer: 1</p>
-              <p>Description: Lorem Ipsum</p>
+          </div> */}
+
+          <div className="p-[40px]">
+
+          
+            {/* Details */}
+            <div className=" flex flex-col gap-5">
+              <h1 className="flex items-center rounded-xl pl-[10px] border-2 w-[500px] h-[40px] ">Wallet Address: 1</h1>
+              <h1 className="flex items-center rounded-xl pl-[10px] border-2 w-[500px] h-[40px] ">Token: Lorem Ipsum</h1>
+              <h1 className="flex items-center rounded-xl pl-[10px] border-2 w-[500px] h-[40px] ">Amount: </h1>
+              <h1 className="flex items-center rounded-xl pl-[10px] border-2 w-[500px] h-[40px] ">Price: </h1>
+              <h1 className="flex items-center rounded-xl pl-[10px] border-2 w-[500px] h-[40px] ">Duration: </h1>
+              <h1 className="flex items-center rounded-xl pl-[10px] border-2 w-[500px] h-[40px] ">Payment Method</h1>
+              <h1 className="flex items-center rounded-xl pl-[10px] border-2 w-[500px] h-[40px] ">Name: </h1>
             </div>
-            <div className="mb-[10px]">
+
+            {/* Button */}
+            <div className="flex mt-5 gap-5">
               <Button
                 onClick={() => {
                   toast({
@@ -54,14 +66,15 @@ function BuyerDetailPage() {
               >
                 Buy
               </Button>
-            </div>
-            <div>
               <Button>Chat</Button>
             </div>
-          </div>
+
+            </div>
+
+
         </div>
+        {state ? <BuyerPov /> : <></>}
       </div>
-      {state ? <BuyerPov /> : <></>}
     </div>
   );
 }

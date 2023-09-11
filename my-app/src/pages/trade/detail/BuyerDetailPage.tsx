@@ -11,9 +11,9 @@ export function BuyerDetailPage() {
   const { address } = useAccount();
   const toast = useToast();
 
-  const handleBuyPending = async () => {
-    await sendNotificationToSeller();
-  };
+  // const handleBuyPending = async () => {
+  //   await sendNotificationToSeller();
+  // };
   return (
     <div>
       <div>Buyer Detail Page</div>
@@ -29,6 +29,7 @@ export function BuyerDetailPage() {
             />
           </div>
         </div>
+        
         <div>
           {/* Details */}
           <div>
