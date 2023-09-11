@@ -1,4 +1,5 @@
 import { CardProfileList } from "@/components/Card/CardProfileList";
+import Navbar from "@/components/Navbar/Navbar";
 import { CardProfileListing } from "@/schema/Card/cardListing";
 import { getListingFromSupabase } from "@/shared/utils";
 
@@ -17,49 +18,61 @@ function ProfilePage() {
     getListing();
   }, []);
   return (
-    <div className="px-[80px]">
-      <div>Profile Page</div>
-      <hr></hr>
-      <div>
+    <div>
+      <Navbar/>
+      <div className="px-[80px] pt-[20px]">
+        <div>Profile Page</div>
+        <hr></hr>
+
+
         <div>
-          <h1 className="text-[20px]">On Going Listing</h1>
-          <div className="grid grid-cols-5 gap-4">
-            {result.map((item: CardProfileListing, index) => {
-              if (!item.offers) {
-                return (
-                  <CardProfileList
-                    id={item.id}
-                    key={index}
-                    token={item.token}
-                    amount={item.amount}
-                    price={item.price}
-                    duration={(item.duration / 60).toString()}
-                    notif={0}
-                  />
-                );
-              } else {
-                return (
-                  <CardProfileList
-                    id={item.id}
-                    key={index}
-                    token={item.token}
-                    amount={item.amount}
-                    price={item.price}
-                    duration={(item.duration / 60).toString()}
-                    notif={item.offers.length}
-                  />
-                );
-              }
-            })}
+          <div>
+            <h1 className="text-[20px]">On Going Listing</h1>
+            <div className="grid grid-cols-5 gap-4">
+              {result.map((item: CardProfileListing, index) => {
+                if (!item.offers) {
+                  return (
+                    <CardProfileList
+                      id={item.id}
+                      key={index}
+                      token={item.token}
+                      amount={item.amount}
+                      price={item.price}
+                      duration={(item.duration / 60).toString()}
+                      notif={0}
+                    />
+                  );
+                } else {
+                  return (
+                    <CardProfileList
+                      id={item.id}
+                      key={index}
+                      token={item.token}
+                      amount={item.amount}
+                      price={item.price}
+                      duration={(item.duration / 60).toString()}
+                      notif={item.offers.length}
+                    />
+                  );
+                }
+              })}
+            </div>
           </div>
-        </div>
-        <hr></hr>
-        <div>
-          <h1>On Going Deals</h1>
-        </div>
-        <hr></hr>
-        <div>
-          <h1>On Going Buy</h1>
+          <hr></hr>
+
+
+          <div>
+            <h1>On Going Deals</h1>
+            <h1></h1>
+
+            
+          </div>
+          <hr></hr>
+
+
+          <div>
+            <h1>On Going Buy</h1>
+          </div>
         </div>
       </div>
     </div>
