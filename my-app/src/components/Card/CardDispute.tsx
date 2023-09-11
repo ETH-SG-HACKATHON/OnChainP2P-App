@@ -13,26 +13,26 @@ export const CardDisputeComponent = ({
 }: CardDisputeComponentProps) => {
   const router = useRouter();
   return (
-    <Card border={"2px"}>
+    <Card border={"2px"} borderColor='teal'>
       <div className="flex justify-between align-center">
         <CardBody>
-          <Text>
+          <Text as='b'>
             {" "}
             Buyer: {buyer} vs Seller: {seller}
           </Text>
-          <Text> Symbol: {symbol}</Text>
+          <Text className="mt-2"> Symbol: {symbol}</Text>
           <Text> Amount: {amount}</Text>
           <Text> Reason: {reason}</Text>
           <Text> Time: {time}</Text>
-          <div className="pt-[10px]">
-            <Button
-              width={100}
+          <div className="mt-5">
+            <button
+              className="bg-green-main font-semibold w-1/3 h-8 rounded-md text-white"
               onClick={() => {
                 router.push(`/dispute/${buyer}`);
               }}
             >
-              Buy
-            </Button>
+              Vote
+            </button>
           </div>
         </CardBody>
       </div>

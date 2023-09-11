@@ -1,9 +1,11 @@
 import { CardComponent } from "@/components/Card/Card";
 import { CardDisputeComponent } from "@/components/Card/CardDispute";
+import Navbar from "@/components/Navbar/Navbar";
 import { CardComponentProps } from "@/schema/Card/card";
 import { CardDisputeComponentProps } from "@/schema/Card/cardDispute";
 import { title } from "process";
 import { useEffect, useState } from "react";
+import { Text } from "@chakra-ui/react";
 
 function Explore() {
   const [data, setData] = useState<CardComponentProps[]>([]);
@@ -31,12 +33,21 @@ function Explore() {
   }, []);
   return (
     <div>
-      {/* Navbar */}
+      <Navbar />
       <div className="px-[100px]">
-        <div className="text-[50px]">Explore</div>
+        <div className="flex flex-col mx-auto justify-center items-center text-green-main text-center mt-10">
+          <Text fontSize="6xl" as="b">
+            Explore More. Know More.
+          </Text>
+          <Text fontSize="xl" as="b" color='black' className="justify-center items-center text-center">
+            Learn more about our current available listings and happening disputes.
+          </Text>
+        </div>
         <div>
-          <div>
-            <h1 className="text-[30px]">Lisitings</h1>
+          <div className="">
+            <Text fontSize="4xl" as="b">
+              Listings
+            </Text>
             <hr></hr>
             <br></br>
             <div className="grid grid-cols-5 gap-4">
@@ -53,8 +64,10 @@ function Explore() {
               })}
             </div>
           </div>
-          <div>
-            <h1 className="text-[30px]">Dispute Happening</h1>
+          <div className="mt-10 mb-20">
+          <Text fontSize="4xl" as="b">
+              Disputes Happening
+            </Text>
             <hr></hr>
             <br></br>
             <div className="grid grid-cols-5 gap-4">

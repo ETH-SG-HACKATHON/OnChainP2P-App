@@ -62,7 +62,7 @@ function ConvertPage() {
                   borderColor="blackAlpha.500"
                   size="lg"
                 />
-                <div className="pl-[10px]">
+                <div className="pl-[12px]">
                   <Select borderColor="blackAlpha.500" size="lg">
                     {tokenOption.map((item, key) => {
                       return <option key={key}>{item.symbol}</option>;
