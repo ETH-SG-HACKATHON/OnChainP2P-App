@@ -12,13 +12,18 @@ import { useRouter } from "next/router";
 function BuyerDetailPage() {
   const [state, setState] = useState(false);
   const [sellerAddress, setSellerAddress] = useState("");
+  const [dataFetch, setDataFetch] = useState<any[]>([]);
   const [listingId, setListingId] = useState(0);
   const { address } = useAccount();
   const toast = useToast();
+  const router = useRouter();
+
+  const { id } = router.query;
 
   const handleBuyPending = async () => {
-    if (address)
-      await sendNotificationToSeller(sellerAddress, address, listingId);
+    if (address) console.log(listingId);
+    console.log(sellerAddress);
+    await sendNotificationToSeller(sellerAddress, address, listingId);
   };
 
   const router = useRouter();
@@ -43,6 +48,7 @@ function BuyerDetailPage() {
       }
     }
   }, [id]);
+
 
   return (
     <div>
@@ -82,12 +88,14 @@ function BuyerDetailPage() {
                   </h1>
                 </div>
               ))}
+ 
             </div>
 
             {/* Button */}
             <div className="flex mt-5 gap-5">
               <button
                 onClick={() => {
+                  handleBuyPending();
                   toast({
                     title: "Notification is Send.",
                     description: "Notification is send to the seller.",

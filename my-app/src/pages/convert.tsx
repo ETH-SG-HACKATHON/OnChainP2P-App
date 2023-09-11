@@ -1,4 +1,4 @@
-import { Select, Input, Text, Button } from "@chakra-ui/react";
+import { Select, Input, Text, Button, useToast } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { useAccount, useBalance } from "wagmi";
 import { FetchBalanceResult } from "wagmi/actions";
@@ -15,6 +15,7 @@ function ConvertPage() {
     address: address,
   });
 
+  const toast = useToast();
   useEffect(() => {
     if (data) {
       setTokenOption([data]);
@@ -113,8 +114,17 @@ function ConvertPage() {
 
             <div className="flex justify-center">
               <button
+
+                onClick={() => {
+                  toast({
+                    title: "Swap Successful.",
+                    description: "Swap has been performed successfully.",
+                    status: "success",
+                    duration: 9000,
+                    isClosable: true,
+                  });
+                }}
                 className="w-[300px] bg-green-main text-white font-semibold py-2 px-4 rounded-full"
-                onClick={handleSubmit}
               >
                 Swap
               </button>
