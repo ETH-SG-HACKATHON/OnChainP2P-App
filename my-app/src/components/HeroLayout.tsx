@@ -10,7 +10,9 @@ const HeroLayout = () => {
     <div className="h-[500px] flex justify-between items-center">
       <div className="ml-[200px] text-xl">
         <div className="flex flex-row text-5xl text-green-main font-bold">
-          <Text fontSize='5xl' className="mr-3" color='black'>Convert</Text>
+          <Text fontSize="5xl" className="mr-3" color="black">
+            Convert
+          </Text>
           <Typewriter
             options={{
               strings: ["USD", "EUR", "IDR", "MYR", "SGD"],
@@ -20,7 +22,9 @@ const HeroLayout = () => {
           />
         </div>
         <div className="flex flex-row text-5xl text-green-main font-bold">
-          <Text fontSize='5xl' className="mr-3" color='black'>Into</Text>
+          <Text fontSize="5xl" className="mr-3" color="black">
+            Into
+          </Text>
           <Typewriter
             options={{
               strings: ["USDT", "USDC"],
@@ -30,7 +34,8 @@ const HeroLayout = () => {
           />
         </div>
         <h1 className="w-[500px] mt-4 font-semibold">
-          DP2P allows easy, secure, and transparent currency exchange from FIAT to Cryptocurrency
+          DP2P is an easy-to-use peer-to-peer (P2P) platform that lets
+          traders buy and sell cryptocurrencies directly with other individuals.
         </h1>
       </div>
 

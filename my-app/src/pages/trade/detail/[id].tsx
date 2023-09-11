@@ -23,7 +23,7 @@ function BuyerDetailPage() {
     <div>
       <Navbar />
       <div className="h-[700px] flex flex-col items-center mt-[50px]">
-        <div className="border-[10px] w-[600px] h-[650px] rounded-3xl">
+        <div className="border-[10px] border-green-main w-[600px] h-[650px] rounded-3xl">
           <h1 className=" mx-8 my-3 text-2xl font-bold"> Listing details </h1>
 
           {/* Image */}
