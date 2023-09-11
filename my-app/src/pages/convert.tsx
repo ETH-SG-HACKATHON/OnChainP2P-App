@@ -1,4 +1,4 @@
-import { Select, Input, Text, Button } from "@chakra-ui/react";
+import { Select, Input, Text, Button, useToast } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import { useAccount, useBalance } from "wagmi";
 import { FetchBalanceResult } from "wagmi/actions";
@@ -13,6 +13,7 @@ function ConvertPage() {
   const { data, isError, isLoading } = useBalance({
     address: address,
   });
+  const toast = useToast();
   useEffect(() => {
     if (data) {
       setTokenOption([data]);
@@ -44,7 +45,9 @@ function ConvertPage() {
         <Text fontSize="5xl" as="b" className="mb-2">
           Simply Click. Simply Input. Simply Swap Currency.
         </Text>
-        <Text fontSize='xl' as='b' className='mb-20' color='black'>One simple interface to swap your cryptocurrency without any hassle.</Text>
+        <Text fontSize="xl" as="b" className="mb-20" color="black">
+          One simple interface to swap your cryptocurrency without any hassle.
+        </Text>
         <div className=" bg-[#F5F5F5] w-[450px] h-[350px] p-[20px] rounded-3xl text-[black] shadow-[0_20px_500px_rgba(0,_128,0,_0.7)]">
           <h1 className="pr-[5px] text-2xl text-[#526D82] font-bold">Swap</h1>
           <br />
@@ -97,7 +100,18 @@ function ConvertPage() {
             <br />
 
             <div className="flex justify-center">
-              <button className="w-[300px] bg-green-main text-white font-semibold py-2 px-4 rounded-full">
+              <button
+                onClick={() => {
+                  toast({
+                    title: "Swap Successful.",
+                    description: "Swap has been performed successfully.",
+                    status: "success",
+                    duration: 9000,
+                    isClosable: true,
+                  });
+                }}
+                className="w-[300px] bg-green-main text-white font-semibold py-2 px-4 rounded-full"
+              >
                 Swap
               </button>
             </div>

@@ -1,5 +1,5 @@
 import { Listing } from "@/schema/createListing";
-import { Select, Button, Input, Heading } from "@chakra-ui/react";
+import { Select, Button, Input, Heading, useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useAccount, useBalance } from "wagmi";
@@ -24,6 +24,7 @@ function Createlisting() {
     address: address,
   });
   const router = useRouter();
+  const toast = useToast();
 
   useEffect(() => {
     console.log(data);
@@ -46,6 +47,13 @@ function Createlisting() {
       };
       //TODO submit transaction to on-chain
       router.push("/");
+      toast({
+        title: "Listing Submitted.",
+        description: "Listing has been submitted to the system.",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      });
     }
   };
 
@@ -202,7 +210,7 @@ function Createlisting() {
                 </div>
                 <div className="my-4">
                   <button
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    className="bg-green-main text-white font-bold py-2 px-4 rounded"
                     onClick={handleSubmit}
                   >
                     Submit
