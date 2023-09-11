@@ -13,16 +13,17 @@ import {
 
   
   interface ListCardProps {
+    token: string;
+    price: number;
+    amount: number;
+    duration: number;
     id: number;
-    idr: number;
-    usdt: number;
-    sAddress: string;
   }
   
-  const ListCard = ({ idr, usdt, sAddress, id }: ListCardProps) => {
+  const ListCard = ({ token, price, amount, duration, id }: ListCardProps) => {
   
-    const handleTrade = ()=> {
-      router.push(`/trade/detail/${id}`);
+    const handleTrade = (walletId)=> {
+      router.push(`/trade/detail/${walletId}`);
   
     }
     return (
@@ -41,17 +42,18 @@ import {
   
         <Stack>
           <CardBody>
-            <Heading size="md">IDR = {idr}</Heading>
+            <Heading size="md">Token = {token}</Heading>
   
             <Text>
-              Available USDT = {usdt} <br />
-              Estimated trade time is 30 minutes <br />
-              Seller Address = {sAddress}
+              Listing Price = {price} <br />
+              Listing Amount = {amount} <br />
+              Listing Duration = {duration}
             </Text>
           </CardBody>
   
           <CardFooter>
-            <button className='bg-green-main text-white font-bold rounded-md w-20 h-10' onClick={handleTrade}>
+            <button className='bg-green-main text-white font-bold rounded-md w-20 h-10' 
+            onClick={() => handleTrade(id)}>
               Trade
             </button>
           </CardFooter>
