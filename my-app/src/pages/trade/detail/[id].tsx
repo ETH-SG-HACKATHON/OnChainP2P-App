@@ -9,7 +9,7 @@ import Navbar from "@/components/Navbar/Navbar";
 import img from "../../../../public/USDC.png";
 
 function BuyerDetailPage() {
-  const [state, setState] = useState(false);
+  const [state, setState] = useState(true);
   const [sellerAddress, setSellerAddress] = useState("");
   const [listingId, setListingId] = useState(0);
   const { address } = useAccount();
