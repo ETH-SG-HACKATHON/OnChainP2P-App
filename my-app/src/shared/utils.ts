@@ -51,20 +51,34 @@ export async function getListingFromSupabase(address: string) {
   }
 }
 
-export async function getListingFromSupabaseDone(address: string) {
+export async function getListingFromSupabaseId(id: number) {
   try {
     const supabase = getSupabase();
     const { data, error } = await supabase
       .from("listing")
       .select()
-      .eq("wallet_address", address)
-      .eq("status", "");
+      .eq("id", id);
     console.log(data);
     return data;
   } catch (e) {
     console.log(e);
   }
 }
+
+export async function getAllListingFromSupabase() {
+  try {
+    const supabase = getSupabase();
+    const { data, error } = await supabase
+      .from("listing")
+      .select()
+    console.log(data);
+    return data;
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+
 
 export async function addImageToSupabase(image: any) {
   try {
@@ -93,32 +107,6 @@ export async function AddImageToDb(link: string, contractAddress: string) {
   }
 }
 
-export const checkBuyerContractDeployed = async (address: string) => {
-  try {
-    const supabase = getSupabase();
-    const { data, error } = await supabase
-      .from("Transaction")
-      .select()
-      .eq("buyer_address", address);
-    return data;
-  } catch (e) {
-    console.log(e);
-  }
-};
-
-export const checkSellerContractDeployed = async (address: string) => {
-  try {
-    const supabase = getSupabase();
-    const { data, error } = await supabase
-      .from("Transaction")
-      .select()
-      .eq("seller_address", address);
-    return data;
-  } catch (e) {
-    console.log(e);
-  }
-};
-
 export async function sendNotificationToSeller(
   seller: string,
   buyer: string,
@@ -139,7 +127,7 @@ export async function sendNotificationToSeller(
     const { data: data2, error: error2 } = await supabase
       .from("listing")
       .insert({
-        offers: [listing_id],
+        offers: listing_id,
       })
       .eq("id", listing_id);
     console.log(data2);
@@ -213,21 +201,6 @@ export const fetchListingById = async (id: number) => {
   }
 };
 
-export const fetchListingByIdDone = async (id: number) => {
-  try {
-    const supabase = getSupabase();
-    const { data, error } = await supabase
-      .from("listing")
-      .select()
-      .eq("id", id)
-      .eq("status", "");
-    console.log(data);
-    return data;
-  } catch (e) {
-    console.log(e);
-  }
-};
-
 export const insertTransaction = async (dataTr: Transaction) => {
   try {
     const supabase = getSupabase();
@@ -240,21 +213,6 @@ export const insertTransaction = async (dataTr: Transaction) => {
         status: "ONGOING",
       })
       .select();
-    console.log(data);
-    return data;
-  } catch (e) {
-    console.log(e);
-  }
-};
-
-export const fetchNotification = async (address: string) => {
-  try {
-    const supabase = getSupabase();
-    const { data, error } = await supabase
-      .from("notification")
-      .select()
-      .eq("seller_address", address)
-      .eq("status", "PENDING");
     console.log(data);
     return data;
   } catch (e) {

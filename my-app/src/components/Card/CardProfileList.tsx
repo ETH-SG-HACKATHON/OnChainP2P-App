@@ -27,7 +27,7 @@ export const CardProfileList = ({
           <h1>Offers: {notif}</h1>
         </CardBody>
       </div>
-      {notif > 0 ? (
+      {notif == 0 ? (
         <Button onClick={() => router.push(`/offers/${address}`)}>
           Check Offer
         </Button>
