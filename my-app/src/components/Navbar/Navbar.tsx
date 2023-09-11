@@ -41,11 +41,19 @@ const Navbar = () => {
     router.push(`/profile`);
   };
 
-  const handleSwap = () =>{
+  const handleSwap = () => {
+    if (isDisconnected) {
+      toast({
+        title: `Please connect your wallet first`,
+        position: "top-right",
+        isClosable: true,
+        status: "warning",
+        duration: 3000,
+      });
+      return;
+    }
     router.push("/convert");
-
-
-  }
+  };
 
   return (
     <div className="h-[70px] flex justify-between items-center">
@@ -54,7 +62,7 @@ const Navbar = () => {
       </Link>
 
       <div className="flex items-center gap-4 mr-[30px]">
-      <button
+        <button
           className="w-[100px] bg-green-main hover:bg-green-main text-white font-semibold py-2 px-4 rounded-full"
           onClick={handleSwap}
         >

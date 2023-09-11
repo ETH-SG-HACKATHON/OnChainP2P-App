@@ -51,9 +51,10 @@ function Createlisting() {
 
   return (
     <div>
-      <div className="p-8">
         <Navbar />
-        <h1 className="text-3xl font-semibold  mt-6 mb-2 ml-4">
+      <div className="p-8">
+      
+        <h1 className="text-3xl font-semibold mb-2 ml-4">
           Create Listing
         </h1>
 
