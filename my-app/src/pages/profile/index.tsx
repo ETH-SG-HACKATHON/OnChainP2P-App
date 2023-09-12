@@ -3,8 +3,6 @@ import { CardProfileList } from "@/components/Card/CardProfileList";
 import Navbar from "@/components/Navbar/Navbar";
 import { CardProfileListing } from "@/schema/Card/cardListing";
 import {
-  checkBuyerContractDeployed,
-  checkSellerContractDeployed,
   fetchAcceptedOffers,
   fetchListingById,
   getListingFromSupabase,
@@ -16,6 +14,7 @@ import { useAccount } from "wagmi";
 function ProfilePage() {
   const [result, setResult] = useState<any[]>([]); // [Listing, Listing, Listing
   const [deals, setDeals] = useState<any[]>([]);
+  const [addressR, setAddressR] = useState<any[]>([]);
   const { address } = useAccount();
   useEffect(() => {
     if (address) {
