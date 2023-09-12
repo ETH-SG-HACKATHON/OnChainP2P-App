@@ -1,7 +1,7 @@
-import DaoCard from "@/components/Card/DaoCard";
 import Navbar from "@/components/Navbar/Navbar";
 import { useState } from "react";
 import { Text } from "@chakra-ui/react";
+import DaoCard from "@/components/Card/Daocard";
 
 const DummyVote = [
   {
@@ -49,7 +49,10 @@ const Dao = () => {
             Vote Anonymously. Fair & Square.
           </Text>
         </div>
-        <Text fontSize="xl" className="justify-center items-center text-center font-semibold">
+        <Text
+          fontSize="xl"
+          className="justify-center items-center text-center font-semibold"
+        >
           DP2P allows anonymous and secure voting from DAO members to ensure
           fairness among users.
         </Text>
