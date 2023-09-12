@@ -118,7 +118,7 @@ export async function AddImageToDb(link: string, contractAddress: string) {
   }
 }
 
-export async function sendNotificationToSeller(
+export async function sendNotificationToSeller( //FIRST
   seller: string,
   buyer: string,
   listing_id: number
@@ -155,14 +155,16 @@ export const acceptOffer = async (id: number) => {
       .update({
         status: "ACCEPTED",
       })
-      .eq("id", id);
+      .eq("listing_id", id)
 
-    const { data: data2, error: error2 } = await supabase
-      .from("noification")
-      .update({
-        status: "REJECTED",
-      })
-      .eq("status", "PENDING");
+      console.log("mydata",data);
+
+    // const { data: data2, error: error2 } = await supabase
+    //   .from("noification")
+    //   .update({
+    //     status: "REJECTED",
+    //   })
+    //   .eq("status", "PENDING");
   } catch (e) {
     console.log(e);
   }
@@ -285,4 +287,16 @@ export async function checkUserOrSeller2(address: string) {
 }
 
 
-
+export async function getNotificationFromSupabaseId(id: number) {
+  try {
+    const supabase = getSupabase();
+    const { data, error } = await supabase
+      .from("notification")
+      .select()
+      .eq("listing_id", id);
+    console.log(data);
+    return data;
+  } catch (e) {
+    console.log(e);
+  }
+}
