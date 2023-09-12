@@ -3,7 +3,7 @@ import { Card, CardBody, Button, Text, useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useAccount, useContractWrite, usePrepareContractWrite } from "wagmi";
-import escrow from "../../../public/EscrowFactoryContract.json";
+import escrow from "../../../public/EscrowContract.json";
 import { fetchListingById, insertTransaction } from "@/shared/utils";
 import { CardOnDealsProps } from "@/schema/Card/cardOnDeals";
 import { BigNumber, ethers } from "ethers";
@@ -43,9 +43,10 @@ export const CardOnDeals = ({
       const data = await fetchListingById(id);
       console.log(data);
       if (data && address) {
-        if (data[0]?.status == "") setState(false);
+        if (data[0]?.status == "") setState(true);
+        console.log("state1", state);
         if (data[0]?.status == "DONE") setState(false);
-        console.log(state);
+        console.log("state2", state);
         setResult(data);
         setSellerAddress(data[0]?.wallet_address);
         setListId(data[0]?.id);
@@ -55,7 +56,7 @@ export const CardOnDeals = ({
       }
     };
     fetchData();
-  }, []);
+  }, [state]);
 
   useEffect(() => {
     const sendData = async () => {
@@ -74,13 +75,20 @@ export const CardOnDeals = ({
     <Card border={"2px"}>
       <div className="flex justify-between align-center">
         <CardBody>
+          <Text>ID: {id}</Text>
           <Text> Token: {token}</Text>
           <Text>Amount: {amount}</Text>
           <Text>Price: {price}</Text>
           <Text>Duration: {duration} Minutes</Text>
         </CardBody>
       </div>
-      {state ?? <DeployEscrowContract listId={listId} />}
+      {state === true ? (
+        <DeployEscrowContract listId={listId} />
+      ) : (
+        <Button onClick={() => router.push(`/trade/detail/${id}`)}>
+          Details
+        </Button>
+      )}
 
       {/* {isSuccess ??
         toast({

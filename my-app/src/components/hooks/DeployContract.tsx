@@ -1,6 +1,8 @@
 import { Button } from "@chakra-ui/react";
 import { useContractWrite, usePrepareContractWrite } from "wagmi";
-import escrow from "../../../public/EscrowFactoryContract.json";
+import escrow from "../../../public/Listings.json";
+import { useEffect } from "react";
+import { updateTransactionStatus } from "@/shared/utils";
 
 interface DeployEscrowContractProps {
   listId: number;
@@ -16,8 +18,13 @@ export const DeployEscrowContract = ({ listId }: DeployEscrowContractProps) => {
       console.log(error);
     },
   });
-
   const { data, write, isSuccess } = useContractWrite(config);
+
+  useEffect(() => {
+    if (isSuccess) {
+      updateTransactionStatus(listId);
+    }
+  }, [isSuccess]);
 
   const handleClick = async () => {
     if (write) write();

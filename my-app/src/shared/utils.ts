@@ -37,13 +37,13 @@ export async function insertListingToSupabase(listData: Listing) {
   }
 }
 
-export async function fetchNotification(address: string) {
+export async function fetchNotification(id: string) {
   try {
     const supabase = getSupabase();
     const { data, error } = await supabase
       .from("notification")
       .select()
-      .eq("seller_address", address)
+      .eq("listing_id", id)
       .eq("status", "PENDING");
     console.log(data);
     return data;
@@ -91,28 +91,34 @@ export async function getAllListingFromSupabase() {
   }
 }
 
-export async function addImageToSupabase(image: any) {
+export async function addImageToSupabase(image: any, id: string) {
   try {
     const supabase = getSupabase();
     console.log(image);
     const { data, error } = await supabase.storage
       .from("image")
       .upload(image.name, image);
-    return { data, error };
+    if (data) {
+      console.log(data);
+      AddImageToDb(data?.path, id);
+    }
   } catch (e) {
     console.log(e);
   }
 }
 
-export async function AddImageToDb(link: string, contractAddress: string) {
+export async function AddImageToDb(link: string, id: string) {
   try {
     const supabase = getSupabase();
     const { data, error } = await supabase
       .from("Transaction")
-      .insert({
+      .update({
         buyer_image_link: `https://uiyrtluvpkkgucnaljby.supabase.co/storage/v1/object/public/image/${link}`,
+        status: "WAITING_SELLER",
       })
-      .eq("contract_address", contractAddress);
+      .eq("listing_id", id);
+    console.log(data);
+    return data;
   } catch (e) {
     console.log(e);
   }
@@ -137,8 +143,8 @@ export async function sendNotificationToSeller( //FIRST
     console.log(data);
     const { data: data2, error: error2 } = await supabase
       .from("listing")
-      .insert({
-        offers: listing_id,
+      .update({
+        offers: [listing_id],
       })
       .eq("id", listing_id);
     console.log(data2);
@@ -307,6 +313,22 @@ export async function getTransactionFromSupabaseId(id: number) {
       .from("Transaction")
       .select()
       .eq("listing_id", id);
+    console.log(data);
+    return data;
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+export async function updateTransactionStatus(id: number) {
+  try {
+    const supabase = getSupabase();
+    const { data, error } = await supabase
+      .from("Transaction")
+      .update({
+        status: "DEPOSITED",
+      })
+      .eq("id", id);
     console.log(data);
     return data;
   } catch (e) {

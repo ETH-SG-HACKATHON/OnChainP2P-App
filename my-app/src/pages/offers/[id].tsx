@@ -4,21 +4,25 @@ import { useEffect, useState } from "react";
 import { Divider, Text } from "@chakra-ui/react";
 import { useAccount } from "wagmi";
 import { fetchNotification } from "@/shared/utils";
+import { useRouter } from "next/router";
 
 function ViewOffers() {
   const [data, setData] = useState<any[] | null | undefined>([]);
   const [addressR, setAddressR] = useState<string | undefined>("");
   const { address } = useAccount();
+  const router = useRouter();
+  const { id } = router.query;
   useEffect(() => {
+    const ids = id?.toString();
     setAddressR(address?.toString());
     const fetchData = async () => {
-      if (address) {
-        const result = await fetchNotification(address?.toString());
+      if (address && ids) {
+        const result = await fetchNotification(ids);
         setData(result);
       }
     };
     fetchData();
-  }, []);
+  }, [id]);
   return (
     <div>
       <Navbar />

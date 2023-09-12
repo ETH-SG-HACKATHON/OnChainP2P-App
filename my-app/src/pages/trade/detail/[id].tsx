@@ -19,6 +19,8 @@ import { watchContractEvent } from "wagmi/actions";
 import escrow from "../../../../public/EscrowFactoryContract.json";
 import { DeployEscrowContract } from "@/components/hooks/DeployContract";
 import { Deposit } from "@/components/hooks/Deposit";
+import { ReleaseFunds } from "@/components/hooks/ReleaseFunds";
+import { BigNumber } from "ethers";
 
 function BuyerDetailPage() {
   const [state, setState] = useState(false);
@@ -226,11 +228,11 @@ function BuyerDetailPage() {
             </div>
 
             <div>
-              {states === 5 ? (
+              {status === "DEPOSITED" ? (
                 <div>
                   {address !== sellerAddress ? (
                     // Render the "Buy" button if the address is not equal to the seller's address
-                    <b onClick={() => setStates(6)}> picture button </b>
+                    <Button onClick={() => setState(true)}>Submit Image</Button>
                   ) : (
                     // Render a message if the address is equal to the seller's address
                     <p> waiting for buyer proof</p>
@@ -241,14 +243,17 @@ function BuyerDetailPage() {
             </div>
 
             <div>
-              {states === 6 ? (
+              {status === "WAITING_SELLER" ? (
                 <div>
                   {address !== sellerAddress ? (
                     // Render the "Buy" button if the address is not equal to the seller's address
                     <p> wait for seller confirmation </p>
                   ) : (
                     // Render a message if the address is equal to the seller's address
-                    <b onClick={() => setStates(7)}> confirm</b>
+                    <ReleaseFunds
+                      id={"2"}
+                      contractAddress={contractAddress as `0x${string}`}
+                    />
                   )}
                 </div>
               ) : // Render nothing if states is not equal to 1
@@ -256,7 +261,7 @@ function BuyerDetailPage() {
             </div>
 
             <div>
-              {states === 7 ? (
+              {status === "DONE" ? (
                 <div>
                   {address !== sellerAddress ? (
                     // Render the "Buy" button if the address is not equal to the seller's address
