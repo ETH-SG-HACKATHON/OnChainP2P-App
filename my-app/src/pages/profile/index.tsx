@@ -14,7 +14,7 @@ import { useAccount } from "wagmi";
 function ProfilePage() {
   const [result, setResult] = useState<any[]>([]); // [Listing, Listing, Listing
   const [deals, setDeals] = useState<any[]>([]);
-  const [addressR, setAddressR] = useState<any[]>([]);
+  const [addressR, setAddressR] = useState("");
   const { address } = useAccount();
   useEffect(() => {
     if (address) {

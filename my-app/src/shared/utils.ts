@@ -155,9 +155,9 @@ export const acceptOffer = async (id: number) => {
       .update({
         status: "ACCEPTED",
       })
-      .eq("listing_id", id)
+      .eq("listing_id", id);
 
-      console.log("mydata",data);
+    console.log("mydata", data);
 
     // const { data: data2, error: error2 } = await supabase
     //   .from("noification")
@@ -286,12 +286,25 @@ export async function checkUserOrSeller2(address: string) {
   }
 }
 
-
 export async function getNotificationFromSupabaseId(id: number) {
   try {
     const supabase = getSupabase();
     const { data, error } = await supabase
       .from("notification")
+      .select()
+      .eq("listing_id", id);
+    console.log(data);
+    return data;
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+export async function getTransactionFromSupabaseId(id: number) {
+  try {
+    const supabase = getSupabase();
+    const { data, error } = await supabase
+      .from("Transaction")
       .select()
       .eq("listing_id", id);
     console.log(data);

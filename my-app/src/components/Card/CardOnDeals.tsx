@@ -28,17 +28,6 @@ export const CardOnDeals = ({
   const { address } = useAccount();
   const router = useRouter();
   const toast = useToast();
-  //   const { config } = usePrepareContractWrite({
-  //     address: "0x0165878a594ca255338adfa4d48449f69242eb8f",
-  //     abi: escrow.abi,
-  //     functionName: "createEscrow",
-  //     args: [value, sellerAddress, addressR, listId],
-  //     onError: (error) => {
-  //       console.log(value);
-  //       console.log(error);
-  //       setState(false);
-  //     },
-  //   });
 
   const watchEvent = watchContractEvent(
     {
@@ -46,20 +35,15 @@ export const CardOnDeals = ({
       abi: escrow.abi,
       eventName: "EscrowCreated",
     },
-    (log) => setContractAddress(log)
+    (log) => console.log(log)
   );
 
-  //   const { data, write, isSuccess } = useContractWrite(config);
-
-  //   const handleClick = async () => {
-  //     if (write) write();
-  //   };
   useEffect(() => {
     const fetchData = async () => {
       const data = await fetchListingById(id);
-      if (data[0]?.status == "") setState(false);
       console.log(data);
       if (data && address) {
+        if (data[0]?.status == "") setState(false);
         if (data[0]?.status == "DONE") setState(false);
         console.log(state);
         setResult(data);
@@ -96,14 +80,7 @@ export const CardOnDeals = ({
           <Text>Duration: {duration} Minutes</Text>
         </CardBody>
       </div>
-      {state ?? (
-        <DeployEscrowContract
-          value={value}
-          sellerAddress={sellerAddress}
-          addressR={addressR}
-          listId={listId}
-        />
-      )}
+      {state ?? <DeployEscrowContract listId={listId} />}
 
       {/* {isSuccess ??
         toast({

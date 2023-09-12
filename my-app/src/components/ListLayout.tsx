@@ -30,8 +30,7 @@ const ListLayout = () => {
     async function fetchData() {
       try {
         const data = await getAllListingFromSupabase();
-
-        setListings(data);
+        if (data) setListings(data);
       } catch (error) {
         console.error("Error:", error);
       }

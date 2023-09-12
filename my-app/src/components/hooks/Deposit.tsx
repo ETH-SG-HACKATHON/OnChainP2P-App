@@ -1,5 +1,5 @@
 import { Button } from "@chakra-ui/react";
-import escrow from "../../../public/EscrowFactoryContract.json";
+import escrow from "../../../public/EscrowContract.json";
 import { usePrepareContractWrite, useContractWrite } from "wagmi";
 
 interface DepositProps {
